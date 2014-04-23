@@ -7,6 +7,7 @@ describe Smashcut do
       text = read_fountain 'just a scene heading'
       screenplay = Smashcut.new(text)
       expect { screenplay.tokens }.to_not raise_error
+      expect(screenplay.tokens.first[:slug]).to eq "EXT. PARK - DAY"
     end
 
     it 'can parse a scene heading with action' do

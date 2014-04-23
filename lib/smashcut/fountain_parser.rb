@@ -3,7 +3,7 @@ require "parslet"
 class Smashcut
   class FountainParser < Parslet::Parser
     rule(:line_break) { match("\n") }
-    rule(:scene_heading) { match("[A-Z \-\. ]").repeat(1) >> line_break.maybe >> line_break.maybe }
+    rule(:scene_heading) { (match("[A-Z \-\. ]").repeat(1)).as(:slug) >> line_break.maybe >> line_break.maybe }
     rule(:character_name) { match("[A-Z ]").repeat(1) >> line_break }
     rule(:dialogue_speech) { match("[a-zA-Z\s\.\(\)\,0-9\?]").repeat(1) >> line_break.maybe >> line_break.maybe }
     rule(:dialogue_block) { character_name >> line_break >> action >> line_break.maybe >> line_break.maybe }
