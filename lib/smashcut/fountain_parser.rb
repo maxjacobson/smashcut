@@ -3,12 +3,16 @@ require "parslet"
 class Smashcut
   class FountainParser < Parslet::Parser
     rule(:line_break) { match("\n") }
-    rule(:scene_heading) { (match("[A-Z \-\. ]").repeat(1)).as(:slug) >> line_break.maybe >> line_break.maybe }
+    rule(:dot) { str('.') }
+    rule(:scene_openers) { dot | str('ext.') | str('EXT.') | str('int.') | str('INT.') | str('est.') | str('EST.') }
+    rule(:scene_heading_dot) { ( dot >> line_break.absent? >> match("[a-z-A-Z\s]").repeat(1) ).as(:slug) }
+    rule(:scene_heading_whitelist) { ( scene_openers >> line_break.absent? >> match("[a-z-A-Z\s]").repeat(1) ).as(:slug) }
+    rule(:scene_heading) { (match("[A-Z \-\. ]").repeat(1)).as(:slug) >> line_break >> line_break.maybe }
     rule(:character_name) { match("[A-Z ]").repeat(1) >> line_break }
     rule(:dialogue_speech) { match("[a-zA-Z\s\.\(\)\,0-9\?]").repeat(1) >> line_break.maybe >> line_break.maybe }
     rule(:dialogue_block) { character_name >> line_break >> action >> line_break.maybe >> line_break.maybe }
-    rule(:action) { match("[a-zA-Z\s\.\(\)\,0-9\?\:]").repeat(1) >> line_break.maybe >> line_break.maybe }
-    rule(:screenplay_element) { scene_heading | dialogue_block | action }
+    rule(:action) { scene_openers.absent? >> match("[a-zA-Z\s\.\(\)\,0-9\?\:\-]").repeat(1).as(:action) >> line_break.maybe >> line_break.maybe }
+    rule(:screenplay_element) { action | scene_heading | scene_heading_dot | scene_heading_whitelist | dialogue_block }
     rule(:screenplay) { (screenplay_element >> line_break.maybe >> line_break.maybe).repeat(1) }
     root(:screenplay)
 
