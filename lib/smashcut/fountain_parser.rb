@@ -20,9 +20,21 @@ class Smashcut
     rule(:screenplay) { (screenplay_element >> line_break.maybe >> line_break.maybe).repeat(1) }
     root(:screenplay)
 
+
+
+    # TODO remove this
+    # we want output now so we know what the parser is thinking
+    # when there are errors -- why did the parser fail? we can learn from this
+    # and also when there aren't -- what did it think it saw there?
+    require 'awesome_print'
     def parse(text)
       begin
-        super(text)
+        tokens = super(text)
+        puts "success! parsed the following text into the following-following tokens:"
+        puts text
+        ap tokens
+        puts "* " * 10
+        tokens
       rescue Parslet::ParseFailed => error
         puts error.cause.ascii_tree
         raise error

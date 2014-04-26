@@ -10,8 +10,6 @@ class Smashcut
 
   def tokens
     @tokens ||= FountainParser.new.parse(text)
-    puts @tokens.inspect
-    @tokens
   end
 
 end
