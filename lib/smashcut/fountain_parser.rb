@@ -3,24 +3,73 @@ require "parslet"
 class Smashcut
   class FountainParser < Parslet::Parser
 
-    rule(:line_break) { match("\n") }
-    rule(:dot) { str('.') }
-
-    rule(:scene_openers) { dot | str('ext.') | str('EXT.') | str('int.') | str('INT.') | str('est.') | str('EST.') }
-    rule(:scene_heading) { ( scene_openers >> line_break.absent? >> match("[a-zA-Z\s\-]").repeat(1) ).as(:slug) }
-
-    rule(:character_name) { match("[A-Z ]").repeat(1) >> line_break }
-    rule(:dialogue_speech) { match("[a-zA-Z\s\.\(\)\,0-9\?]").repeat(1) >> line_break.maybe >> line_break.maybe }
-    rule(:dialogue_block) { character_name >> line_break >> action >> line_break.maybe >> line_break.maybe }
-
-    rule(:action) { scene_openers.absent? >> match("[a-zA-Z\s\.\(\)\,0-9\?\:\-]").repeat(1).as(:action) >> line_break.maybe >> line_break.maybe }
-
-
-    rule(:screenplay_element) { action | scene_heading | dialogue_block }
-    rule(:screenplay) { (screenplay_element >> line_break.maybe >> line_break.maybe).repeat(1) }
     root(:screenplay)
 
+    rule(:screenplay) do
+      (
+        screenplay_element >>
+        line_break.maybe >>
+        line_break.maybe
+      ).repeat(1)
+    end
 
+    rule(:screenplay_element) do
+      action |
+      scene_heading |
+      dialogue_block
+    end
+
+    rule(:line_break) do
+      str("\n")
+    end
+
+    rule(:dot) do
+      str('.')
+    end
+
+    rule(:scene_openers) do
+      dot |
+      str('ext.') |
+      str('EXT.') |
+      str('int.') |
+      str('INT.') |
+      str('est.') |
+      str('EST.')
+    end
+
+    rule(:scene_heading) do
+      (
+        scene_openers >>
+        line_break.absent? >>
+        match("[a-zA-Z\s\-]").repeat(1)
+      ).as(:slug)
+    end
+
+    rule(:character_name) do
+      match("[A-Z ]").repeat(1) >>
+      line_break
+    end
+
+    rule(:dialogue_speech) do
+      match("[a-zA-Z\s\.\(\)\,0-9\?]").repeat(1) >>
+      line_break.maybe >>
+      line_break.maybe
+    end
+
+    rule(:dialogue_block) do
+      character_name >>
+      line_break >>
+      action >>
+      line_break.maybe >>
+      line_break.maybe
+    end
+
+    rule(:action) do
+      scene_openers.absent? >>
+      match("[a-zA-Z\s\.\(\)\,0-9\?\:\-]").repeat(1).as(:action) >>
+      line_break.maybe >>
+      line_break.maybe
+    end
 
     # TODO remove this
     # we want output now so we know what the parser is thinking
