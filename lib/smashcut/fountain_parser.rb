@@ -7,7 +7,7 @@ class Smashcut
     rule(:dot) { str('.') }
 
     rule(:scene_openers) { dot | str('ext.') | str('EXT.') | str('int.') | str('INT.') | str('est.') | str('EST.') }
-    rule(:scene_heading) { ( scene_openers >> line_break.absent? >> match("[a-z-A-Z\s]").repeat(1) ).as(:slug) }
+    rule(:scene_heading) { ( scene_openers >> line_break.absent? >> match("[a-zA-Z\s\-]").repeat(1) ).as(:slug) }
 
     rule(:character_name) { match("[A-Z ]").repeat(1) >> line_break }
     rule(:dialogue_speech) { match("[a-zA-Z\s\.\(\)\,0-9\?]").repeat(1) >> line_break.maybe >> line_break.maybe }
