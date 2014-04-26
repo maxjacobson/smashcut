@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec",   "~> 3.0.0.beta2"
   spec.add_development_dependency "debugger"
 
-  spec.add_runtime_dependency "parslet", "~> 1.5"
+  spec.add_runtime_dependency "parslet", "~> 1.6"
 
   spec.required_ruby_version = '>= 1.9.3'
 end
