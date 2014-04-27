@@ -27,22 +27,38 @@ class Smashcut
       str('.')
     end
 
+    rule(:space) do
+      str(' ')
+    end
+
+    rule(:anything_but_line_break) do
+      line_break.absent? >> match("[a-zA-Z\s\-\.\/]").repeat(1)
+    end
+
+
+    rule(:leading_dot_scene_heading) do
+      dot >> anything_but_line_break.as(:scene_heading)
+    end
+
     rule(:scene_openers) do
-      dot |
-      str('ext.') |
-      str('EXT.') |
-      str('int.') |
-      str('INT.') |
-      str('est.') |
-      str('EST.')
+      %w{ i/e int/ext int./ext ext int est }.map do |opener|
+        opener.split('').map do |char|
+          match["#{char.downcase}#{char.upcase}"]
+        end.reduce(:>>)
+      end.reduce(:|)
+    end
+
+    rule(:whitelisted_scene_openers_scene_heading) do
+      (
+        scene_openers >>
+        dot.maybe >>
+        space >>
+        anything_but_line_break
+      ).as(:scene_heading)
     end
 
     rule(:scene_heading) do
-      (
-        scene_openers >>
-        line_break.absent? >>
-        match("[a-zA-Z\s\-]").repeat(1)
-      ).as(:scene_heading)
+      leading_dot_scene_heading | whitelisted_scene_openers_scene_heading
     end
 
     rule(:character_name) do
