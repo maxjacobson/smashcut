@@ -14,7 +14,7 @@ describe Smashcut::FountainParser do
         end
         it 'can understand this text' do
           tokens = parser.parse(text)
-          expect(tokens.first[:slug]).to eq "EXT. PARK - DAY"
+          expect(tokens.first[:scene_heading]).to eq "EXT. PARK - DAY"
         end
       end
 
@@ -27,38 +27,38 @@ describe Smashcut::FountainParser do
           end
           it 'can understand this text' do
             tokens = parser.parse(text)
-            expect(tokens.first[:slug]).to eq "IN THE WOODS"
+            expect(tokens.first[:scene_heading]).to eq "IN THE WOODS"
           end
         end
 
         describe 'the rest of the white list' do
           after(:each) do
-            expect(parser).to parse @slug
-            expect( parser.parse(@slug).first[:slug] ).to eq @slug
+            expect(parser).to parse @scene_heading
+            expect( parser.parse(@scene_heading).first[:scene_heading] ).to eq @scene_heading
           end
 
           it 'can parse INT.' do
-            @slug = "INT. APARTMENT - NIGHT"
+            @scene_heading = "INT. APARTMENT - NIGHT"
           end
 
           it 'can parse int.' do
-            @slug = 'int. apartment - day'
+            @scene_heading = 'int. apartment - day'
           end
 
           it 'can parse EXT.' do
-            @slug = 'EXT. PARK - NIGHT'
+            @scene_heading = 'EXT. PARK - NIGHT'
           end
 
           it 'can parse ext.' do
-            @slug = 'ext. space - forever'
+            @scene_heading = 'ext. space - forever'
           end
 
           it 'can parse INT without a dot' do
-            @slug = 'INT MALL - NIGHT'
+            @scene_heading = 'INT MALL - NIGHT'
           end
 
           it 'can parse I/E.' do
-            @slug = 'I/E. CONVERTIBLE / HIGHWAY - DAY'
+            @scene_heading = 'I/E. CONVERTIBLE / HIGHWAY - DAY'
           end
 
         end
@@ -74,7 +74,7 @@ describe Smashcut::FountainParser do
       text = read_fountain 'scene heading with action'
       expect(parser).to parse text
       tokens = parser.parse(text)
-      expect(tokens[0][:slug]).to eq "EXT. PARK - DAY"
+      expect(tokens[0][:scene_heading]).to eq "EXT. PARK - DAY"
       expect(tokens[1][:action]).to eq "A large extended family enjoys a picnic."
     end
 
