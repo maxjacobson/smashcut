@@ -14,7 +14,7 @@ describe Smashcut::FountainParser do
         end
         it 'can understand this text' do
           tokens = parser.parse(text)
-          expect(tokens.first[:slug]).to eq "EXT. PARK - DAY"
+          expect(tokens.first[:scene_heading]).to eq "EXT. PARK - DAY"
         end
       end
 
@@ -27,71 +27,131 @@ describe Smashcut::FountainParser do
           end
           it 'can understand this text' do
             tokens = parser.parse(text)
-            expect(tokens.first[:slug]).to eq "IN THE WOODS"
+            expect(tokens.first[:scene_heading]).to eq "IN THE WOODS"
           end
         end
 
         describe 'the rest of the white list' do
           after(:each) do
-            expect(parser).to parse @slug
-            expect( parser.parse(@slug).first[:slug] ).to eq @slug
+            expect(parser).to parse @scene_heading
+            expect( parser.parse(@scene_heading).first[:scene_heading] ).to eq @scene_heading
           end
 
           it 'can parse INT.' do
-            @slug = "INT. APARTMENT - NIGHT"
+            @scene_heading = "INT. APARTMENT - NIGHT"
           end
 
           it 'can parse int.' do
-            @slug = 'int. apartment - day'
+            @scene_heading = 'int. apartment - day'
           end
 
           it 'can parse EXT.' do
-            @slug = 'EXT. PARK - NIGHT'
+            @scene_heading = 'EXT. PARK - NIGHT'
           end
 
           it 'can parse ext.' do
-            @slug = 'ext. space - forever'
+            @scene_heading = 'ext. space - forever'
           end
 
           it 'can parse INT without a dot' do
-            @slug = 'INT MALL - NIGHT'
+            @scene_heading = 'INT MALL - NIGHT'
           end
 
           it 'can parse I/E.' do
-            @slug = 'I/E. CONVERTIBLE / HIGHWAY - DAY'
+            @scene_heading = 'I/E. CONVERTIBLE / HIGHWAY - DAY'
           end
 
         end
-      end
 
+        describe 'scene numbers' do
+          let(:text) { "EXT. HIKING TRAIL - DAY #1.#" }
+
+          it 'can parse scene headings with scene numbers' do
+            expect(parser).to parse text
+          end
+
+          it 'knows which part is which' do
+            tokens = parser.parse(text)
+            expect(tokens[0][:scene_heading]).to eq "EXT. HIKING - TRAIL - DAY"
+            expect(tokens[0][:scene_number]).to eq "1."
+          end
+
+        end
+
+      end
 
       it 'does not think that trailing dot lines are scene headings' do
         expect(parser.parse('The end.').first[:action]).to eq "The end."
       end
     end
 
-    it 'can parse a scene heading with action' do
-      text = read_fountain 'scene heading with action'
-      expect(parser).to parse text
-      tokens = parser.parse(text)
-      expect(tokens[0][:slug]).to eq "EXT. PARK - DAY"
-      expect(tokens[1][:action]).to eq "A large extended family enjoys a picnic."
+    describe 'action' do
+
+      let(:text) { read_fountain 'scene heading with action' }
+
+      it 'recognizes action following a scene heading' do
+        expect(parser).to parse text
+      end
+
+      it 'knows which part is the scene heading and which part is the action' do
+        tokens = parser.parse(text)
+        expect(tokens[0][:scene_heading]).to eq "EXT. PARK - DAY"
+        expect(tokens[1][:action]).to eq "A large extended family enjoys a picnic."
+      end
+
     end
 
-    it 'can parse a scene with simple dialogue' do
-      text = read_fountain 'scene with simple dialogue'
-      expect(parser).to parse text
+    describe 'character'
+
+    describe 'dialogue' do
+      it 'can parse a scene with simple dialogue' do
+        text = read_fountain 'scene with simple dialogue'
+        expect(parser).to parse text
+      end
     end
 
-    it 'can parse a scene with parenthetical dialogue' do
-      text = read_fountain 'scene with parenthetical dialogue'
-      expect(parser).to parse text
+    describe 'parenthetical' do
+      it 'can parse a scene with parenthetical dialogue' do
+        text = read_fountain 'scene with parenthetical dialogue'
+        expect(parser).to parse text
+      end
     end
 
-    it 'can parse a scene with a transition to another scene' do
-      text = read_fountain 'scene with transition'
-      expect(parser).to parse text
+    describe 'dual dialogue'
+
+    describe 'lyrics'
+
+    describe 'transition' do
+
+      it 'can parse a scene with a transition to another scene' do
+        text = read_fountain 'scene with transition'
+        expect(parser).to parse text
+      end
+
     end
+
+    describe 'centered text'
+
+    describe 'emphasis'
+
+    describe 'title page'
+
+    describe 'page breaks'
+
+    describe 'punctuation'
+
+    describe 'line breaks'
+
+    describe 'indenting'
+
+    describe 'notes'
+
+    describe 'boneyard'
+
+    describe 'sections and synopses'
+
+    describe 'error handling'
+
 
   end
 end

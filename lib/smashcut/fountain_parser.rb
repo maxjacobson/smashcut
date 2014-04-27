@@ -42,7 +42,7 @@ class Smashcut
         scene_openers >>
         line_break.absent? >>
         match("[a-zA-Z\s\-]").repeat(1)
-      ).as(:slug)
+      ).as(:scene_heading)
     end
 
     rule(:character_name) do
