@@ -19,6 +19,7 @@
 
 * [x] begin a parser!
 * [x] parse scene headings
+* [x] parse scene numbers at the end of scene headings
 * [ ] parse action
 * [ ] parse transition
 * [ ] parse dialogue
