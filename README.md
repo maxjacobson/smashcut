@@ -15,13 +15,29 @@
 [2]: https://speakerdeck.com/promptworks/writing-dsls-with-parslet-nyc-dot-rb
 [3]: http://rspec.info/
 
+#### status report
+
+* [x] begin a parser!
+* [x] parse scene headings
+* [ ] parse action
+* [ ] parse transition
+* [ ] parse dialogue
+* [ ] parse title page stuff
+* [ ] parse the rest of it!
+
 ### generate useful output
 
 * generate HTML and PDF output
-* probably use [prawn][4] as the PDF generating library, because it allows very fine control
+* probably use [prawn][4] as the PDF generating library, because it allows very fine control and doesn't require non-ruby dependencies
 * have tons of tests to help guide the way -- if prawn has tests for its PDFs, smashcut can learn from them
 
 [4]: http://prawnpdf.org/
+
+#### status reports
+
+* [ ] make HTML?
+* [ ] make FDX?
+* [ ] make a PDF
 
 ## boilerplate provided by `bundle gem smashcut`
 

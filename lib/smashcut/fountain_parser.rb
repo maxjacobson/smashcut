@@ -31,13 +31,20 @@ class Smashcut
       str(' ')
     end
 
-    rule(:anything_but_line_break) do
-      line_break.absent? >> match("[a-zA-Z\s\-\.\/]").repeat(1)
+    rule(:hash) do
+      str('#')
     end
 
+    rule(:bang) do
+      str('!')
+    end
 
     rule(:leading_dot_scene_heading) do
-      dot >> anything_but_line_break.as(:scene_heading)
+      dot >>
+      (
+        match("[a-zA-Z\s\-]").repeat(1)
+      ).as(:scene_heading) >>
+      scene_number.maybe
     end
 
     rule(:scene_openers) do
@@ -53,8 +60,16 @@ class Smashcut
         scene_openers >>
         dot.maybe >>
         space >>
-        anything_but_line_break
-      ).as(:scene_heading)
+        match("[a-zA-Z\s\-]").repeat(1)
+      ).as(:scene_heading) >>
+      scene_number.maybe
+    end
+
+    rule(:scene_number) do
+      space.maybe >>
+      hash >>
+      match('[0-9a-zA-z\.\-]').repeat(1).as(:scene_number) >>
+      hash
     end
 
     rule(:scene_heading) do

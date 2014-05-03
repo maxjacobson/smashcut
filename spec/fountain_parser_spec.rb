@@ -1,76 +1,43 @@
 require_relative 'spec_helper'
 
-describe Smashcut::FountainParser do
-  let(:parser) { Smashcut::FountainParser.new }
+describe Smashcut::FountainParser.new.root do
+  let(:parser) { Smashcut::FountainParser.new.root }
   describe '#parse' do
 
     describe 'action' do
 
-      let(:text) { read_fountain 'scene heading with action' }
+      let(:text) do
+        "EXT. PARK - DAY\n\nA large extended family enjoys a picnic."
+      end
 
       it 'recognizes action following a scene heading' do
-        expect(parser).to parse text
+        parser.should parse text
       end
 
       it 'knows which part is the scene heading and which part is the action' do
         tokens = parser.parse(text)
-        expect(tokens[0][:scene_heading]).to eq "EXT. PARK - DAY"
-        expect(tokens[1][:action]).to eq "A large extended family enjoys a picnic."
+        tokens[0][:scene_heading].should eq "EXT. PARK - DAY"
+        tokens[1][:action].should eq "A large extended family enjoys a picnic."
       end
 
     end
 
     describe 'character'
-
-    describe 'dialogue' do
-      it 'can parse a scene with simple dialogue' do
-        text = read_fountain 'scene with simple dialogue'
-        expect(parser).to parse text
-      end
-    end
-
-    describe 'parenthetical' do
-      it 'can parse a scene with parenthetical dialogue' do
-        text = read_fountain 'scene with parenthetical dialogue'
-        expect(parser).to parse text
-      end
-    end
-
+    describe 'dialogue'
+    describe 'parenthetical'
     describe 'dual dialogue'
-
     describe 'lyrics'
-
-    describe 'transition' do
-
-      it 'can parse a scene with a transition to another scene' do
-        text = read_fountain 'scene with transition'
-        expect(parser).to parse text
-      end
-
-    end
-
+    describe 'transition'
     describe 'centered text'
-
     describe 'emphasis'
-
     describe 'title page'
-
     describe 'page breaks'
-
     describe 'punctuation'
-
     describe 'line breaks'
-
     describe 'indenting'
-
     describe 'notes'
-
     describe 'boneyard'
-
     describe 'sections and synopses'
-
     describe 'error handling'
-
-
   end
 end
