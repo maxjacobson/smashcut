@@ -9,7 +9,7 @@ class Smashcut
   end
 
   def tokens
-    @tokens ||= FountainParser.new.parse(text)
+    @tokens ||= FountainParser.new.root.parse(text)
   end
 
 end
