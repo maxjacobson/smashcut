@@ -8,7 +8,7 @@
 
 * parse screenplays written in Fountain (<http://fountain.io/syntax>)
 * comply to the spec as much as possible
-* probably use parslet ([about][1], [slides][2]) as the parsing engine
+* use parslet ([about][1], [slides][2]) as the parsing engine
 * have tons of [tests][3] to help guide the way
 
 [1]: http://kschiess.github.io/parslet/
@@ -17,12 +17,34 @@
 
 #### status report
 
+```
+EXT. NEW YORK CITY - DAY
+
+Max whistles down the street.
+
+MAX
+I should like to parse a screenplay.
+```
+
+```ruby
+require 'pp'
+require 'smashcut'
+pp Smashcut.new( File.read('screenplay.fountain') ).tokens
+[{:scene_heading=>"EXT. NEW YORK CITY - DAY"@0},
+ {:action=>"Max whistles down the street."@26},
+  {:dialogue=>
+     {:character_name=>"MAX"@57,
+         :speech=>"I should like to parse a screenplay."@61}}]
+```
+
 * [x] begin a parser!
 * [x] parse scene headings
 * [x] parse scene numbers at the end of scene headings
+* [x] parse dialogue
+* [ ] parse dialogue with multiple parentheticals
+* [ ] parse dual dialogue
 * [ ] parse action
 * [ ] parse transition
-* [ ] parse dialogue
 * [ ] parse title page stuff
 * [ ] parse the rest of it!
 

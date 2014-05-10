@@ -14,9 +14,9 @@ class Smashcut
     end
 
     rule(:screenplay_element) do
-      action |
       scene_heading |
-      dialogue_block
+      dialogue |
+      action
     end
 
     rule(:line_break) do
@@ -37,6 +37,18 @@ class Smashcut
 
     rule(:bang) do
       str('!')
+    end
+
+    rule(:spiral) do
+      str('@')
+    end
+
+    rule(:opening_parenthesis) do
+      str("(")
+    end
+
+    rule(:closing_parenthesis) do
+      str(")")
     end
 
     rule(:leading_dot_scene_heading) do
@@ -76,23 +88,43 @@ class Smashcut
       leading_dot_scene_heading | whitelisted_scene_openers_scene_heading
     end
 
+    rule(:spiral_character_name) do
+      spiral >>
+      match("[A-Za-z ]").repeat(1).as(:character_name)
+    end
+
+    rule(:no_spiral_character_name) do
+      match("[A-Z ]").repeat(1).as(:character_name)
+    end
+
     rule(:character_name) do
-      match("[A-Z ]").repeat(1) >>
-      line_break
+      spiral_character_name | no_spiral_character_name
     end
 
-    rule(:dialogue_speech) do
-      match("[a-zA-Z\s\.\(\)\,0-9\?]").repeat(1) >>
-      line_break.maybe >>
-      line_break.maybe
+    rule(:speech) do
+      (
+        match("[a-zA-Z\s\.\(\)\,0-9\?]").repeat(1)
+      ).as(:speech)
     end
 
-    rule(:dialogue_block) do
-      character_name >>
-      line_break >>
-      action >>
-      line_break.maybe >>
-      line_break.maybe
+    rule(:dialogue) do
+      (
+        character_name >>
+        line_break >>
+        (
+          parenthetical >>
+          line_break
+        ).maybe >>
+        speech
+      ).as(:dialogue)
+    end
+
+    rule(:parenthetical) do
+      (
+        opening_parenthesis >>
+        match("[a-zA-Z\s]").repeat(1) >>
+        closing_parenthesis
+      ).as(:parenthetical)
     end
 
     rule(:action) do
@@ -102,24 +134,6 @@ class Smashcut
       line_break.maybe
     end
 
-    # TODO remove this
-    # we want output now so we know what the parser is thinking
-    # when there are errors -- why did the parser fail? we can learn from this
-    # and also when there aren't -- what did it think it saw there?
-    require 'awesome_print'
-    def parse(text)
-      begin
-        tokens = super(text)
-        puts "success! parsed the following text into the following-following tokens:"
-        puts text
-        ap tokens
-        puts "* " * 10
-        tokens
-      rescue Parslet::ParseFailed => error
-        puts error.cause.ascii_tree
-        raise error
-      end
-    end
   end
 end
 
