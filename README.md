@@ -23,6 +23,7 @@ EXT. NEW YORK CITY - DAY
 Max whistles down the street.
 
 MAX
+(wistfully)
 I should like to parse a screenplay.
 ```
 
@@ -34,7 +35,8 @@ pp Smashcut.new( File.read('screenplay.fountain') ).tokens
  {:action=>"Max whistles down the street."@26},
   {:dialogue=>
      {:character_name=>"MAX"@57,
-         :speech=>"I should like to parse a screenplay."@61}}]
+         :parenthetical=>"(wistfully)"@61,
+             :speech=>"I should like to parse a screenplay."@73}}]
 ```
 
 * [x] begin a parser!
@@ -62,29 +64,31 @@ pp Smashcut.new( File.read('screenplay.fountain') ).tokens
 * [ ] make FDX?
 * [ ] make a PDF
 
-## boilerplate provided by `bundle gem smashcut`
+### Installation & Usage
 
-### Installation
+Because this is not useful yet I haven't pushed it to the rubygems site. If you'd like to try it, you can follow these steps:
 
-Add this line to your application's Gemfile:
+* `git clone git@github.com:maxjacobson/smashcut.git`
+* `cd smashcut`
+* `bundle install`
+* `rake install`
 
-    gem 'smashcut'
+And then in `irb` or your ruby scripts you can
 
-And then execute:
+```ruby
+require 'smashcut'
+Smashcut.new( "A screenplay written in the Fountain syntax" ).tokens
+```
 
-    $ bundle
+If you'd like to run the tests you can do so like so:
 
-Or install it yourself as:
+`QUIET=true rake`
 
-    $ gem install smashcut
-
-### Usage
-
-TODO: Write usage instructions here
+Or just `rake` (which isn't as quiet)
 
 ### Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/smashcut/fork )
+1. Fork it ( https://github.com/maxjacobson/smashcut/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
