@@ -96,7 +96,7 @@ class Smashcut
     end
 
     rule(:no_spiral_character_name) do
-      anything_but("a-z\n").as(:character_name)
+      anything_but("a-z", "\n").as(:character_name)
     end
 
     rule(:character_name) do
@@ -132,8 +132,8 @@ class Smashcut
       anything_but("\n").as(:action)
     end
 
-    def anything_but(chars)
-      match["^#{chars}"].repeat(1)
+    def anything_but(*chars)
+      match["^#{chars.join}"].repeat(1)
     end
 
   end
