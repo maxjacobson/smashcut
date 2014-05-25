@@ -51,14 +51,6 @@ class Smashcut
       str(")")
     end
 
-    rule(:leading_dot_scene_heading) do
-      dot >>
-      (
-        match("[a-zA-Z\s\-]").repeat(1)
-      ).as(:scene_heading) >>
-      scene_number.maybe
-    end
-
     rule(:scene_openers) do
       %w{ i/e int/ext int./ext ext int est }.map do |opener|
         opener.split('').map do |char|
@@ -67,21 +59,32 @@ class Smashcut
       end.reduce(:|)
     end
 
+    rule(:scene_number) do
+      space.maybe >>
+      hash >>
+      anything_but("#").as(:scene_number) >>
+      hash
+    end
+
+    rule(:anything_but_scene_number) do
+      #match[' /##{match["^/#"].repeat(1)}/#}'] >> anything_but("\n") 
+      match['^#\n'].repeat(1)
+    end
+
+    rule(:leading_dot_scene_heading) do
+      dot >>
+      anything_but_scene_number.as(:scene_heading) >>
+      scene_number.maybe
+    end
+
     rule(:whitelisted_scene_openers_scene_heading) do
       (
         scene_openers >>
         dot.maybe >>
         space >>
-        match("[a-zA-Z\s\-]").repeat(1)
+        anything_but_scene_number
       ).as(:scene_heading) >>
       scene_number.maybe
-    end
-
-    rule(:scene_number) do
-      space.maybe >>
-      hash >>
-      match('[0-9a-zA-z\.\-]').repeat(1).as(:scene_number) >>
-      hash
     end
 
     rule(:scene_heading) do
@@ -90,11 +93,11 @@ class Smashcut
 
     rule(:spiral_character_name) do
       spiral >>
-      match("[A-Za-z ]").repeat(1).as(:character_name)
+      anything_but("\n").as(:character_name)
     end
 
     rule(:no_spiral_character_name) do
-      match("[A-Z ]").repeat(1).as(:character_name)
+      anything_but("a-z", "\n").as(:character_name)
     end
 
     rule(:character_name) do
@@ -102,9 +105,7 @@ class Smashcut
     end
 
     rule(:speech) do
-      (
-        match("[a-zA-Z\s\.\(\)\,0-9\?]").repeat(1)
-      ).as(:speech)
+      anything_but("\n").as(:speech)
     end
 
     rule(:dialogue) do
@@ -122,16 +123,18 @@ class Smashcut
     rule(:parenthetical) do
       (
         opening_parenthesis >>
-        match("[a-zA-Z\s]").repeat(1) >>
+        anything_but(")") >>
         closing_parenthesis
       ).as(:parenthetical)
     end
 
     rule(:action) do
       scene_openers.absent? >>
-      match("[a-zA-Z\s\.\(\)\,0-9\?\:\-]").repeat(1).as(:action) >>
-      line_break.maybe >>
-      line_break.maybe
+      anything_but("\n").as(:action)
+    end
+
+    def anything_but(*chars)
+      match["^#{chars.join}"].repeat(1)
     end
 
   end

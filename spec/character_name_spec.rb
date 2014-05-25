@@ -31,5 +31,9 @@ describe Smashcut::FountainParser.new.character_name do
       character_name.should_not parse "Max Jacobson"
     end
 
+    it 'can parse names with numbers' do
+      character_name.should parse "COP 2"
+    end
+
   end
 end
