@@ -67,7 +67,8 @@ class Smashcut
     end
 
     rule(:anything_but_scene_number) do
-      scene_number.absent? >> anything_but("\n")
+      #match[' /##{match["^/#"].repeat(1)}/#}'] >> anything_but("\n") 
+      match['^#\n'].repeat(1)
     end
 
     rule(:leading_dot_scene_heading) do

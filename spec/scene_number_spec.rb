@@ -28,7 +28,7 @@ describe Smashcut::FountainParser.new.scene_number do
       scene_number.parse("#1#")[:scene_number].should eq '1'
     end
     it 'can capture repeating digits' do
-      scene_number.parse("#1#")[:scene_number].should eq '1'
+      scene_number.parse("#111#")[:scene_number].should eq '111'
     end
   end
 
