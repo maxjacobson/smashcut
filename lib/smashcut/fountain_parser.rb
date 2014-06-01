@@ -16,6 +16,7 @@ class Smashcut
     rule(:screenplay_element) do
       scene_heading |
       dialogue |
+      transition |
       action
     end
 
@@ -130,6 +131,13 @@ class Smashcut
     rule(:action) do
       scene_openers.absent? >>
       anything_but("\n").as(:action)
+    end
+
+    rule(:transition) do
+      (
+        anything_but(":") >> str(":")
+      ).as(:transition) >>
+      line_break
     end
 
     def anything_but(*chars)

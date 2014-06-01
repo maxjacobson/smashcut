@@ -50,7 +50,14 @@ describe Smashcut::FountainParser.new.root do
 
     describe 'dual dialogue'
     describe 'lyrics'
-    describe 'transition'
+    describe 'transition' do
+      it 'can parse a scene that transitions to another scene' do
+        text = read_fountain 'simple scene'
+        parser.should parse text
+        tokens = parser.parse(text)
+        tokens.should include({ transition: 'FADE TO:' })
+      end
+    end
     describe 'centered text'
     describe 'emphasis'
     describe 'title page'
