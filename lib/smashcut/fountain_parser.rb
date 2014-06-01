@@ -133,7 +133,9 @@ class Smashcut
     end
 
     rule(:transition) do
-      str("TO:").absent? >> str("TO:")
+      (
+        anything_but(":") >> str(":")
+      ).as(:transition)
     end
 
     def anything_but(*chars)
