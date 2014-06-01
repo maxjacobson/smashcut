@@ -132,6 +132,10 @@ class Smashcut
       anything_but("\n").as(:action)
     end
 
+    rule(:transition) do
+      str("TO:").absent? >> str("TO:")
+    end
+
     def anything_but(*chars)
       match["^#{chars.join}"].repeat(1)
     end
