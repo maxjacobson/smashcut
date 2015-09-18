@@ -4,7 +4,7 @@ class Smashcut
       include Parslet
 
       rule(:scene_openers) do
-        %w{ i/e int/ext int./ext ext int est }.map do |opener|
+        %w( i/e int/ext int./ext ext int est ).map do |opener|
           opener.split("").map do |char|
             match["#{char.downcase}#{char.upcase}"]
           end.reduce(:>>)

@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Smashcut::VERSION
   spec.authors       = ["Max Jacobson"]
   spec.email         = ["max@hardscrabble.net"]
-  spec.summary       = %q{Parse screenplays with Ruby}
-  spec.description   = %q{Parse screenplays with Ruby}
+  spec.summary       = %q(Parse screenplays with Ruby)
+  spec.description   = %q(Parse screenplays with Ruby)
   spec.homepage      = "https://github.com/maxjacobson/smashcut"
   spec.license       = "MIT"
 
