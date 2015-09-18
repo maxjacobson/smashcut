@@ -27,5 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "awesome_print"
   spec.add_development_dependency "codeclimate-test-reporter", "~> 0.4"
 
-  spec.required_ruby_version = '>= 1.9.3'
+  spec.required_ruby_version = '>= 2.2.0'
 end
