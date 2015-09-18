@@ -1,7 +1,7 @@
 # This spec is for testing the parser in full, including the root
 #
 # The other specs are for testing individual rules
-describe Smashcut::FountainParser.new.root do
+RSpec.describe Smashcut::FountainParser.new.root do
   let(:parser) { Smashcut::FountainParser.new.root }
   describe '#parse' do
     describe "action" do
@@ -10,13 +10,13 @@ describe Smashcut::FountainParser.new.root do
       end
 
       it "recognizes action following a scene heading" do
-        parser.should parse text
+        expect(parser).to parse text
       end
 
       it "knows which part is the scene heading and which part is the action" do
         first, second = parser.parse(text)
-        first[:scene_heading].should eq "EXT. PARK - DAY"
-        second[:action].should eq "A large extended family enjoys a picnic."
+        expect(first[:scene_heading]).to eq "EXT. PARK - DAY"
+        expect(second[:action]).to eq "A large extended family enjoys a picnic."
       end
     end
 
@@ -26,15 +26,15 @@ describe Smashcut::FountainParser.new.root do
       end
 
       it "can parse this scene" do
-        parser.should parse text
+        expect(parser).to parse text
       end
 
       it "can annotate this scene" do
         first, second, third = parser.parse(text)
-        first[:scene_heading].should eq "EXT. CARNIVAL - NIGHT"
-        second[:action].should eq "MAX walks between the games."
-        third[:dialogue][:character_name].should eq "MAX"
-        third[:dialogue][:speech].should eq "Whoa"
+        expect(first[:scene_heading]).to eq "EXT. CARNIVAL - NIGHT"
+        expect(second[:action]).to eq "MAX walks between the games."
+        expect(third[:dialogue][:character_name]).to eq "MAX"
+        expect(third[:dialogue][:speech]).to eq "Whoa"
       end
     end
 

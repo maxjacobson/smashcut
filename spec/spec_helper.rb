@@ -11,14 +11,7 @@ require "parslet/rig/rspec"
 Dir.glob("./spec/support/**/*.rb").each { |f| require f }
 
 RSpec.configure do |config|
-  # let's keep it fresh
   config.raise_errors_for_deprecations!
-
-  # tests should pass in any order
+  config.disable_monkey_patching!
   config.order = :random
-
-  config.expect_with :rspec do |c|
-    # TODO: switch over to expect
-    c.syntax = :should
-  end
 end

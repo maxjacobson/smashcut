@@ -1,4 +1,4 @@
-describe Smashcut::FountainParser.new.parenthetical do
+RSpec.describe Smashcut::FountainParser.new.parenthetical do
   let(:parenthetical) do
     Smashcut::FountainParser.new.parenthetical
   end
@@ -7,17 +7,17 @@ describe Smashcut::FountainParser.new.parenthetical do
     let(:text) { "(quiet)" }
 
     it "should parse parentheticals" do
-      parenthetical.should parse text
+      expect(parenthetical).to parse text
     end
 
     it "should annotate parentheticals" do
-      parenthetical.parse(text)[:parenthetical].should eq text
+      expect(parenthetical.parse(text)[:parenthetical]).to eq text
     end
   end
 
   describe "sad path" do
     it "should not parse non parentheticals" do
-      parenthetical.should_not parse "Hello"
+      expect(parenthetical).not_to parse "Hello"
     end
   end
 end
