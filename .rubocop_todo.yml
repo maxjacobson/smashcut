@@ -20,9 +20,3 @@ Style/Documentation:
     - 'lib/smashcut/parslet_debug.rb'
     - 'lib/smashcut/version.rb'
 
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/MultilineOperationIndentation:
-  Enabled: false
-

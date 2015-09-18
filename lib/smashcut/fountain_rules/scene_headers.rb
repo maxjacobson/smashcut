@@ -13,9 +13,9 @@ class Smashcut
 
       rule(:scene_number) do
         space.maybe >>
-        hash >>
-        anything_but("#").as(:scene_number) >>
-        hash
+          hash >>
+          anything_but("#").as(:scene_number) >>
+          hash
       end
 
       rule(:anything_but_scene_number) do
@@ -24,8 +24,8 @@ class Smashcut
 
       rule(:leading_dot_scene_heading) do
         dot >>
-        anything_but_scene_number.as(:scene_heading) >>
-        scene_number.maybe
+          anything_but_scene_number.as(:scene_heading) >>
+          scene_number.maybe
       end
 
       rule(:whitelisted_scene_openers_scene_heading) do
@@ -35,7 +35,7 @@ class Smashcut
           space >>
           anything_but_scene_number
         ).as(:scene_heading) >>
-        scene_number.maybe
+          scene_number.maybe
       end
 
       rule(:scene_heading) do

@@ -17,8 +17,8 @@ class Smashcut
 
     rule(:screenplay_element) do
       scene_heading |
-      dialogue |
-      action
+        dialogue |
+        action
     end
   end
 end

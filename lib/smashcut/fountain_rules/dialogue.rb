@@ -5,7 +5,7 @@ class Smashcut
 
       rule(:spiral_character_name) do
         spiral >>
-        anything_but("\n").as(:character_name)
+          anything_but("\n").as(:character_name)
       end
 
       rule(:no_spiral_character_name) do

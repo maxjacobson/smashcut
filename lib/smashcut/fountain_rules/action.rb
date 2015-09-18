@@ -5,7 +5,7 @@ class Smashcut
 
       rule(:action) do
         scene_openers.absent? >>
-        anything_but("\n").as(:action)
+          anything_but("\n").as(:action)
       end
     end
   end
