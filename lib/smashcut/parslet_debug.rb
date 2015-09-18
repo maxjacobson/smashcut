@@ -1,4 +1,4 @@
-require 'awesome_print'
+require "awesome_print"
 
 module Parslet
   module Atoms

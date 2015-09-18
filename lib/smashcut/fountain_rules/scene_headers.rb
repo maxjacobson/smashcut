@@ -5,7 +5,7 @@ class Smashcut
 
       rule(:scene_openers) do
         %w{ i/e int/ext int./ext ext int est }.map do |opener|
-          opener.split('').map do |char|
+          opener.split("").map do |char|
             match["#{char.downcase}#{char.upcase}"]
           end.reduce(:>>)
         end.reduce(:|)

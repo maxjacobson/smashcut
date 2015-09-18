@@ -1,6 +1,6 @@
-require 'smashcut'
-require 'parslet/rig/rspec'
-require 'smashcut/parslet_debug' unless ENV['QUIET'] == 'true'
+require "smashcut"
+require "parslet/rig/rspec"
+require "smashcut/parslet_debug" unless ENV["QUIET"] == "true"
 
 def read_fountain(file)
   filename = File.expand_path "./spec/screenplays/" + file.tr(" ", "_") + ".fountain"

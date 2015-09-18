@@ -8,11 +8,11 @@ class Smashcut
       end
 
       rule(:dot) do
-        str('.')
+        str(".")
       end
 
       rule(:space) do
-        str(' ')
+        str(" ")
       end
 
       rule(:hash) do
@@ -20,11 +20,11 @@ class Smashcut
       end
 
       rule(:bang) do
-        str('!')
+        str("!")
       end
 
       rule(:spiral) do
-        str('@')
+        str("@")
       end
 
       rule(:opening_parenthesis) do

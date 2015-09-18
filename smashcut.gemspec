@@ -1,7 +1,7 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'smashcut/version'
+require "smashcut/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "smashcut"
@@ -27,5 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry"
   spec.add_development_dependency "awesome_print"
 
-  spec.required_ruby_version = '>= 2.2.0'
+  spec.required_ruby_version = ">= 2.2.0"
 end

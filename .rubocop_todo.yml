@@ -39,12 +39,6 @@ Style/PercentLiteralDelimiters:
     - 'lib/smashcut/fountain_rules/scene_headers.rb'
     - 'smashcut.gemspec'
 
-# Offense count: 87
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/StringLiterals:
-  Enabled: false
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/UnneededPercentQ:
