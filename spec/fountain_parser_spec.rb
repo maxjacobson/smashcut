@@ -1,11 +1,6 @@
-=begin
-
-  This spec is for testing the parser in full, including the root
-
-  The other specs are for testing individual rules
-
-=end
-
+# This spec is for testing the parser in full, including the root
+#
+# The other specs are for testing individual rules
 describe Smashcut::FountainParser.new.root do
   let(:parser) { Smashcut::FountainParser.new.root }
   describe '#parse' do

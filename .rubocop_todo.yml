@@ -11,12 +11,6 @@
 Metrics/LineLength:
   Max: 87
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/BlockComments:
-  Exclude:
-    - 'spec/fountain_parser_spec.rb'
-
 # Offense count: 11
 Style/Documentation:
   Exclude:
