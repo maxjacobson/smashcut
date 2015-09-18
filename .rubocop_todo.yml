@@ -45,18 +45,6 @@ Style/PercentLiteralDelimiters:
 Style/StringLiterals:
   Enabled: false
 
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/TrailingBlankLines:
-  Exclude:
-    - 'Rakefile'
-    - 'lib/smashcut/fountain_parser.rb'
-    - 'lib/smashcut/fountain_rules.rb'
-    - 'lib/smashcut/fountain_rules/action.rb'
-    - 'spec/dialogue_spec.rb'
-    - 'spec/scene_heading_spec.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/UnneededPercentQ:

@@ -10,4 +10,3 @@ class Smashcut
     end
   end
 end
-

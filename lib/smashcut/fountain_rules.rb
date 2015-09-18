@@ -13,4 +13,3 @@ class Smashcut
     include Action
   end
 end
-

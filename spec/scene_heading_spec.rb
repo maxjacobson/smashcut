@@ -70,4 +70,3 @@ describe Smashcut::FountainParser.new.scene_heading do
     end
   end
 end
-

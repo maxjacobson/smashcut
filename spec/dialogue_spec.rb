@@ -36,4 +36,3 @@ describe Smashcut::FountainParser.new.dialogue do
     end
   end
 end
-
