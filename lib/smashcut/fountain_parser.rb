@@ -20,7 +20,6 @@ class Smashcut
       dialogue |
       action
     end
-
   end
 end
 

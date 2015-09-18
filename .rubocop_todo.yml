@@ -25,14 +25,6 @@ Style/Documentation:
     - 'lib/smashcut/parslet_debug.rb'
     - 'lib/smashcut/version.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/EmptyLinesAroundClassBody:
-  Exclude:
-    - 'lib/smashcut.rb'
-    - 'lib/smashcut/fountain_parser.rb'
-
 # Offense count: 5
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.

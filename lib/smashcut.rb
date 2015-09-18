@@ -11,5 +11,4 @@ class Smashcut
   def tokens
     @tokens ||= FountainParser.new.root.parse(text)
   end
-
 end
