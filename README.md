@@ -15,41 +15,6 @@
 [2]: https://speakerdeck.com/promptworks/writing-dsls-with-parslet-nyc-dot-rb
 [3]: http://rspec.info/
 
-#### status report
-
-```
-EXT. NEW YORK CITY - DAY
-
-Max whistles down the street.
-
-MAX
-(wistfully)
-I should like to parse a screenplay.
-```
-
-```ruby
-require 'pp'
-require 'smashcut'
-pp Smashcut.new( File.read('screenplay.fountain') ).tokens
-[{:scene_heading=>"EXT. NEW YORK CITY - DAY"@0},
- {:action=>"Max whistles down the street."@26},
-  {:dialogue=>
-     {:character_name=>"MAX"@57,
-         :parenthetical=>"(wistfully)"@61,
-             :speech=>"I should like to parse a screenplay."@73}}]
-```
-
-* [x] begin a parser!
-* [x] parse scene headings
-* [x] parse scene numbers at the end of scene headings
-* [x] parse dialogue
-* [ ] parse dialogue with multiple parentheticals
-* [ ] parse dual dialogue
-* [ ] parse action
-* [ ] parse transition
-* [ ] parse title page stuff
-* [ ] parse the rest of it!
-
 ### generate useful output
 
 * generate HTML and PDF output
@@ -58,27 +23,14 @@ pp Smashcut.new( File.read('screenplay.fountain') ).tokens
 
 [4]: http://prawnpdf.org/
 
-#### status reports
-
-* [ ] make HTML?
-* [ ] make FDX?
-* [ ] make a PDF
-
-### Installation & Usage
+### Installation
 
 Because this is not useful yet I haven't pushed it to the rubygems site. If you'd like to try it, you can follow these steps:
 
 * `git clone git@github.com:maxjacobson/smashcut.git`
 * `cd smashcut`
 * `bundle install`
-* `bundle exec rake install`
-
-And then in `irb` or your ruby scripts you can
-
-```ruby
-require 'smashcut'
-Smashcut.new( "A screenplay written in the Fountain syntax" ).tokens
-```
+* `rake install`
 
 ### tests and style
 

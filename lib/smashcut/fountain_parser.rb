@@ -1,6 +1,6 @@
 require "parslet"
 
-class Smashcut
+module Smashcut
   class FountainParser < Parslet::Parser
     def anything_but(*chars)
       match["^#{chars.join}"].repeat(1)

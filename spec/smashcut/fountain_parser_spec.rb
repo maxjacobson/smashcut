@@ -7,7 +7,7 @@ RSpec.describe Smashcut::FountainParser.new.root do
       end
 
       it "recognizes action following a scene heading" do
-        expect(parser).to parse text
+        expect(parser).to parse(text)
       end
 
       it "knows which part is the scene heading and which part is the action" do
