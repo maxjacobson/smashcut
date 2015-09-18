@@ -80,11 +80,9 @@ require 'smashcut'
 Smashcut.new( "A screenplay written in the Fountain syntax" ).tokens
 ```
 
-If you'd like to run the tests you can do so like so:
+### tests and style
 
-`QUIET=true rake`
-
-Or just `rake` (which isn't as quiet)
+If you'd like to run the tests and linter, just run `rake`.
 
 ### Contributing
 
