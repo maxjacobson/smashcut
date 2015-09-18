@@ -1,5 +1,4 @@
 describe Smashcut::FountainParser.new.character_name do
-
   let(:character_name) { Smashcut::FountainParser.new.character_name }
 
   context 'with leading @' do
@@ -16,7 +15,6 @@ describe Smashcut::FountainParser.new.character_name do
   end
 
   context 'without leading @' do
-
     it 'can parse names in all capitals' do
       character_name.should parse "MAX"
     end
@@ -32,6 +30,5 @@ describe Smashcut::FountainParser.new.character_name do
     it 'can parse names with numbers' do
       character_name.should parse "COP 2"
     end
-
   end
 end

@@ -25,20 +25,6 @@ Style/Documentation:
     - 'lib/smashcut/parslet_debug.rb'
     - 'lib/smashcut/version.rb'
 
-# Offense count: 21
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/EmptyLinesAroundBlockBody:
-  Exclude:
-    - 'spec/anything_but_scene_number_spec.rb'
-    - 'spec/anything_but_spec.rb'
-    - 'spec/character_name_spec.rb'
-    - 'spec/dialogue_spec.rb'
-    - 'spec/fountain_parser_spec.rb'
-    - 'spec/parenthetical_spec.rb'
-    - 'spec/scene_heading_spec.rb'
-    - 'spec/scene_number_spec.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.

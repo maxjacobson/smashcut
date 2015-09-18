@@ -4,9 +4,7 @@
 describe Smashcut::FountainParser.new.root do
   let(:parser) { Smashcut::FountainParser.new.root }
   describe '#parse' do
-
     describe 'action' do
-
       let(:text) do
         "EXT. PARK - DAY\n\nA large extended family enjoys a picnic."
       end
@@ -20,7 +18,6 @@ describe Smashcut::FountainParser.new.root do
         first[:scene_heading].should eq "EXT. PARK - DAY"
         second[:action].should eq "A large extended family enjoys a picnic."
       end
-
     end
 
     describe 'dialogue' do

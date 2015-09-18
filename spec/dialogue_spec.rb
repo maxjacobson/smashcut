@@ -2,9 +2,7 @@ describe Smashcut::FountainParser.new.dialogue do
   let(:dialogue) { Smashcut::FountainParser.new.dialogue }
 
   context 'with parentheticals' do
-
     describe "simple parentheticals" do
-
       let(:text) do
         read_fountain("simple dialogue with parenthetical").chomp
       end
@@ -19,9 +17,7 @@ describe Smashcut::FountainParser.new.dialogue do
         token[:parenthetical].should eq "(stoned)"
         token[:speech].should eq "Whoa, show me that again..."
       end
-
     end
-
   end
 
   context 'without parentheticals' do
@@ -37,9 +33,7 @@ describe Smashcut::FountainParser.new.dialogue do
         token[:character_name].should eq "MAX"
         token[:speech].should eq "What time is your train?"
       end
-
     end
   end
-
 end
 

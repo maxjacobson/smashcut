@@ -1,5 +1,4 @@
 describe Smashcut::FountainParser.new.scene_number do
-
   let(:scene_number) { Smashcut::FountainParser.new.scene_number }
 
   describe 'the syntax' do
@@ -29,5 +28,4 @@ describe Smashcut::FountainParser.new.scene_number do
       scene_number.parse("#111#")[:scene_number].should eq '111'
     end
   end
-
 end

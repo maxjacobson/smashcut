@@ -69,6 +69,5 @@ describe Smashcut::FountainParser.new.scene_heading do
       scene_heading.should_not parse 'Esteban walked down the sidewalk'
     end
   end
-
 end
 

@@ -1,5 +1,4 @@
 describe Smashcut::FountainParser.new.parenthetical do
-
   let(:parenthetical) do
     Smashcut::FountainParser.new.parenthetical
   end
@@ -21,5 +20,4 @@ describe Smashcut::FountainParser.new.parenthetical do
       parenthetical.should_not parse "Hello"
     end
   end
-
 end
