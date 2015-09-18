@@ -26,8 +26,3 @@ Style/Documentation:
 Style/MultilineOperationIndentation:
   Enabled: false
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/UnneededPercentQ:
-  Exclude:
-    - 'smashcut.gemspec'
