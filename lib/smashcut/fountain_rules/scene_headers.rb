@@ -41,7 +41,6 @@ class Smashcut
       rule(:scene_heading) do
         leading_dot_scene_heading | whitelisted_scene_openers_scene_heading
       end
-
     end
   end
 end

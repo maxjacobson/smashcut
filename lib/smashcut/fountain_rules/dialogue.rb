@@ -39,7 +39,6 @@ class Smashcut
           closing_parenthesis
         ).as(:parenthetical)
       end
-
     end
   end
 end

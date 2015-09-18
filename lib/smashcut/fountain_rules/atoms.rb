@@ -34,7 +34,6 @@ class Smashcut
       rule(:closing_parenthesis) do
         str(")")
       end
-
     end
   end
 end

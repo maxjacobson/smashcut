@@ -6,7 +6,6 @@ class Smashcut
       def anything_but(*chars)
         match["^#{chars.join}"].repeat(1)
       end
-
     end
   end
 end

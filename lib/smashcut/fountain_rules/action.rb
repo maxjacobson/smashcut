@@ -7,7 +7,6 @@ class Smashcut
         scene_openers.absent? >>
         anything_but("\n").as(:action)
       end
-
     end
   end
 end
