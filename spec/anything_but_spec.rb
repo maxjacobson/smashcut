@@ -1,5 +1,5 @@
 describe 'anything_but' do
-  let(:parser) { Smashcut::FountainParser.new}
+  let(:parser) { Smashcut::FountainParser.new }
 
   it 'should not parse input with excluded characters' do
     rule = parser.anything_but("a")
