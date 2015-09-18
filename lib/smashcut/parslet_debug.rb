@@ -19,7 +19,8 @@ class Smashcut
   class FountainParser
     def parse(text)
       tokens = super(text)
-      puts "success! parsed the following text into the following-following tokens:"
+      puts "success! parsed the following text into the " \
+           "following-following tokens:"
       puts text
       ap tokens
       puts "* " * 10

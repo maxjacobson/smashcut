@@ -4,6 +4,7 @@ describe Smashcut::FountainParser.new.action do
     action.should parse "He walked down the street."
   end
   it "annotates correctly" do
-    action.parse("Gum stuck to his shoe")[:action].should eq "Gum stuck to his shoe"
+    action_text = action.parse("Gum stuck to his shoe")[:action]
+    action_text.should eq "Gum stuck to his shoe"
   end
 end
