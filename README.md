@@ -71,7 +71,7 @@ Because this is not useful yet I haven't pushed it to the rubygems site. If you'
 * `git clone git@github.com:maxjacobson/smashcut.git`
 * `cd smashcut`
 * `bundle install`
-* `rake install`
+* `bundle exec rake install`
 
 And then in `irb` or your ruby scripts you can
 
@@ -82,7 +82,7 @@ Smashcut.new( "A screenplay written in the Fountain syntax" ).tokens
 
 ### tests and style
 
-If you'd like to run the tests and linter, just run `rake`.
+If you'd like to run the tests and linter, just run `bundle exec rake`.
 
 ### Contributing
 
