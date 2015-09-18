@@ -1,5 +1,3 @@
-require_relative 'spec_helper'
-
 describe 'anything_but_scene_number' do
 
   let(:rule) { Smashcut::FountainParser.new.anything_but_scene_number }

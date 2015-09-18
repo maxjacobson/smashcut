@@ -1,5 +1,3 @@
-require_relative 'spec_helper'
-
 describe Smashcut::FountainParser.new.action do
   let(:action) { Smashcut::FountainParser.new.action }
   it 'recognizes action' do

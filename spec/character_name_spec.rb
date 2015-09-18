@@ -1,5 +1,3 @@
-require_relative 'spec_helper'
-
 describe Smashcut::FountainParser.new.character_name do
 
   let(:character_name) { Smashcut::FountainParser.new.character_name }

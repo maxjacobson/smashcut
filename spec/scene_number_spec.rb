@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Smashcut::FountainParser.new.scene_number do
 
   let(:scene_number) { Smashcut::FountainParser.new.scene_number }

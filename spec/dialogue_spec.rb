@@ -1,5 +1,3 @@
-require_relative 'spec_helper'
-
 describe Smashcut::FountainParser.new.dialogue do
   let(:dialogue) { Smashcut::FountainParser.new.dialogue }
 

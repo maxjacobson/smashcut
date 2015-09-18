@@ -1,5 +1,3 @@
-require_relative 'spec_helper'
-
 describe 'anything_but' do
 
   let(:parser) { Smashcut::FountainParser.new}

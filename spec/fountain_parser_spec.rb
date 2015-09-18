@@ -1,5 +1,3 @@
-require_relative 'spec_helper'
-
 =begin
 
   This spec is for testing the parser in full, including the root
