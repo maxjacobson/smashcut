@@ -43,5 +43,9 @@ RSpec.describe Smashcut::FountainTransform do
       expect(action).to be_a Smashcut::Screenplay::Action
       expect(action.text).to eq "A large extended family enjoys a picnic."
     end
+
+    it "knows its #scene_count" do
+      expect(screenplay.scene_count).to eq 1
+    end
   end
 end

@@ -11,5 +11,9 @@ module Smashcut
     def initialize(elements)
       @elements = elements
     end
+
+    def scene_count
+      elements.count { |el| el.is_a?(SceneHeading) }
+    end
   end
 end
