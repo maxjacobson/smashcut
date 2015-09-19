@@ -3,11 +3,15 @@ inherit_from: '.rubocop_todo.yml'
 AllCops:
   DisplayCopNames: true
 
-Style/StringLiterals:
-  EnforcedStyle: 'double_quotes'
+Style/Documentation:
+  Include:
+    - "lib/**/*"
 
 Style/HashSyntax:
   EnforcedStyle: 'hash_rockets'
+
+Style/StringLiterals:
+  EnforcedStyle: 'double_quotes'
 
 Metrics/ClassLength:
   Enabled: false
