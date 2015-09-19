@@ -2,6 +2,14 @@ require "parslet"
 
 module Smashcut
   class FountainParser < Parslet::Parser
+    root(:screenplay)
+
+    rule(:screenplay) do
+      (screenplay_element >>
+       line_break.maybe >>
+       line_break.maybe).repeat(1).as(:screenplay)
+    end
+
     def anything_but(*chars)
       match["^#{chars.join}"].repeat(1)
     end
@@ -113,19 +121,10 @@ module Smashcut
         closing_parenthesis
       ).as(:parenthetical)
     end
+
     rule(:action) do
       scene_openers.absent? >>
         anything_but("\n").as(:action)
-    end
-
-    root(:screenplay)
-
-    rule(:screenplay) do
-      (
-        screenplay_element >>
-        line_break.maybe >>
-        line_break.maybe
-      ).repeat(1)
     end
 
     rule(:screenplay_element) do

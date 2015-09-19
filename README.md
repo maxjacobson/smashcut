@@ -18,14 +18,17 @@
 ### generate useful output
 
 * generate HTML and PDF output
-* probably use [prawn][4] as the PDF generating library, because it allows very fine control and doesn't require non-ruby dependencies
-* have tons of tests to help guide the way -- if prawn has tests for its PDFs, smashcut can learn from them
+* probably use [prawn][4] as the PDF generating library, because it allows very
+  fine control and doesn't require non-ruby dependencies
+* have tons of tests to help guide the way -- if prawn has tests for its PDFs,
+  smashcut can learn from them
 
 [4]: http://prawnpdf.org/
 
 ### Installation
 
-Because this is not useful yet I haven't pushed it to the rubygems site. If you'd like to try it, you can follow these steps:
+Because this is not useful yet I haven't pushed it to the rubygems site. If
+you'd like to try it, you can follow these steps:
 
 * `git clone git@github.com:maxjacobson/smashcut.git`
 * `cd smashcut`
@@ -34,12 +37,14 @@ Because this is not useful yet I haven't pushed it to the rubygems site. If you'
 
 ### tests and style
 
-If you'd like to run the tests and linter, just run `bundle exec rake`.
+If you'd like to run the tests and linter, just run `bundle exec rake`. Another
+option you have is to run `bundle exec guard`, which will auto-run tests when
+ou edit files.
 
 ### Contributing
 
 1. Fork it ( https://github.com/maxjacobson/smashcut/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+1. Create your feature branch (`git checkout -b my-new-feature`)
+1. Commit your changes (`git commit -am 'Add some feature'`)
+1. Push to the branch (`git push origin my-new-feature`)
+1. Create a new Pull Request

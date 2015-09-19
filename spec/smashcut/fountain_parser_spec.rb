@@ -11,7 +11,7 @@ RSpec.describe Smashcut::FountainParser.new.root do
       end
 
       it "knows which part is the scene heading and which part is the action" do
-        first, second = parser.parse(text)
+        first, second = parser.parse(text).fetch(:screenplay)
         expect(first[:scene_heading]).to eq "EXT. PARK - DAY"
         expect(second[:action]).to eq "A large extended family enjoys a picnic."
       end
@@ -27,7 +27,7 @@ RSpec.describe Smashcut::FountainParser.new.root do
       end
 
       it "can annotate this scene" do
-        first, second, third = parser.parse(text)
+        first, second, third = parser.parse(text).fetch(:screenplay)
         expect(first[:scene_heading]).to eq "EXT. CARNIVAL - NIGHT"
         expect(second[:action]).to eq "MAX walks between the games."
         expect(third[:dialogue][:character_name]).to eq "MAX"
