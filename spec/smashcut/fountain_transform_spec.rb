@@ -29,4 +29,19 @@ RSpec.describe Smashcut::FountainTransform do
       expect(screenplay.elements.last.text).to eq "Max opens his door."
     end
   end
+
+  context "when the fountain text has a scene heading" do
+    let(:fountain_text) do
+      "EXT. PARK - DAY\n\nA large extended family enjoys a picnic."
+    end
+    it "makes a screenplay with a scene heading" do
+      expect(screenplay).to be_a Smashcut::Screenplay
+      expect(screenplay.elements.length).to eq 2
+      scene_heading, action = screenplay.elements
+      expect(scene_heading).to be_a Smashcut::Screenplay::SceneHeading
+      expect(scene_heading.text).to eq "EXT. PARK - DAY"
+      expect(action).to be_a Smashcut::Screenplay::Action
+      expect(action.text).to eq "A large extended family enjoys a picnic."
+    end
+  end
 end

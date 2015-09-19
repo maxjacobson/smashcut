@@ -7,5 +7,6 @@ module Smashcut
   class FountainTransform < Parslet::Transform
     rule(:screenplay => sequence(:elements)) { Screenplay.new(elements) }
     rule(:action => simple(:text)) { Screenplay::Action.new(text) }
+    rule(:scene_heading => simple(:text)) { Screenplay::SceneHeading.new(text) }
   end
 end

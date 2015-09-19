@@ -1,3 +1,4 @@
+require "smashcut/screenplay/scene_heading"
 require "smashcut/screenplay/action"
 
 module Smashcut
