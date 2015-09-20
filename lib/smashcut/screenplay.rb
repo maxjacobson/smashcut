@@ -1,7 +1,7 @@
 require "smashcut/screenplay/scene_heading"
 require "smashcut/screenplay/action"
 require "smashcut/screenplay/plain_text_phrase"
-require "smashcut/screenplay/italicized_phrase"
+require "smashcut/screenplay/emphasized_phrase"
 
 module Smashcut
   # This is the object that represents a screenplay, which can offer some info

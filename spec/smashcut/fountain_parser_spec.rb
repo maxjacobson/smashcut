@@ -5,7 +5,7 @@ RSpec.describe Smashcut::FountainParser do
     context "when the screenplay is a scene heading and some action" do
       let(:text) { read_fountain "scene heading and action" }
 
-      xit "should parse the screenplay" do
+      it "should parse the screenplay" do
         expect(parser).to parse(text)
           .as(:screenplay => [
             { :scene_heading => "EXT. PARK - DAY" },
@@ -17,7 +17,7 @@ RSpec.describe Smashcut::FountainParser do
     context "when the screenplay is a scene heading, action, and dialogue" do
       let(:text) { read_fountain "scene heading action and dialogue" }
 
-      xit "should parse the screenplay" do
+      it "should parse the screenplay" do
         expect(parser).to parse(text)
           .as(:screenplay => [
             { :scene_heading => "EXT. CARNIVAL - NIGHT" },
@@ -258,41 +258,40 @@ RSpec.describe Smashcut::FountainParser do
       end
     end
 
-    # describe "plain_phrase" do
-    #   let(:rule) { Smashcut::FountainParser.new.plain_phrase }
-    #   context "when the text is a plain word" do
-    #     it do
-    #       expect(rule).to parse("Hello").as(:plain => "Hello")
-    #     end
-    #   end
+    describe "plain_phrase" do
+      let(:rule) { Smashcut::FountainParser.new.plain_phrase }
+      context "when the text is a plain word" do
+        it do
+          expect(rule).to parse("Hello").as(:plain => "Hello")
+        end
+      end
 
-    #   context "when the text is two words, with a space" do
-    #     it do
-    #       expect(rule).to parse("Hello world").as(:plain => "Hello world")
-    #     end
-    #   end
+      context "when the text is two words, with a space" do
+        it do
+          expect(rule).to parse("Hello world").as(:plain => "Hello world")
+        end
+      end
 
-    #   context "when the text contains some characters from not English" do
-    #     let(:text) { "左轉上噴泉" }
-    #     it do
-    #       expect(rule).to parse(text).as(:plain => text)
-    #     end
-    #   end
+      context "when the text contains some characters from not English" do
+        let(:text) { "左轉上噴泉" }
+        it do
+          expect(rule).to parse(text).as(:plain => text)
+        end
+      end
 
-    #   context "when the text is a few words, including punctuation" do
-    #     let(:text) { "Hello, world! My friend... :)" }
-    #     it do
-    #       expect(rule).to parse(text).as(:plain => text)
-    #     end
-    #   end
-
-    #   context "when the text is followed by emphasized text" do
-    #     let(:text) { "Hello *my friend!*" }
-    #     it do
-    #       expect(rule).to parse(text).as(:plain => "Hello ")
-    #     end
-    #   end
-    # end
+      context "when the text is a few words, including punctuation" do
+        let(:text) { "Hello, world! My friend... :)" }
+        it do
+          expect(rule).to parse(text).as(:plain => text)
+        end
+      end
+      context "when the text is followed by emphasized text" do
+        let(:text) { "Hello *my friend!*" }
+        it do
+          expect(rule).to_not parse(text)
+        end
+      end
+    end
 
     describe "emphasized_phrase" do
       let(:rule) { Smashcut::FountainParser.new.emphasized_phrase }
@@ -373,6 +372,16 @@ RSpec.describe Smashcut::FountainParser do
         end
       end
 
+      context "when the text has some emphasis at the end" do
+        let(:text) { "And then... _HOLY SHIT_" }
+        it do
+          expect(rule).to parse(text)
+            .as(:action => [
+              { :plain => "And then... " },
+              { :emphasized_text => "HOLY SHIT", :emphasis => "_" }])
+        end
+      end
+
       context "when the text has some emphasis in the middle" do
         let(:text) { "And then... _HOLY SHIT_ a puppy!" }
         it do
@@ -380,7 +389,7 @@ RSpec.describe Smashcut::FountainParser do
             .as(:action => [
               { :plain => "And then... " },
               { :emphasized_text => "HOLY SHIT", :emphasis => "_" },
-              { :plain => " a puppy." }])
+              { :plain => " a puppy!" }])
         end
       end
     end

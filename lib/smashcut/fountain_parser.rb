@@ -95,7 +95,16 @@ module Smashcut
     end
 
     rule(:plain_phrase) do
-      anything_but("\n").as(:plain) >> emphasized_phrase.absent?
+      dynamic do |source, _context|
+        if (index = source.match(stuff_then_emphasis))
+          current_bytepos = source.bytepos
+          plain_segment = source.consume(index).to_s
+          source.bytepos = current_bytepos
+          str(plain_segment).as(:plain)
+        else
+          anything_but("\n").as(:plain)
+        end
+      end
     end
 
     # whichever chars were used at the start, the reverse should end it
@@ -109,6 +118,20 @@ module Smashcut
     end
 
     private
+
+    def stuff_then_emphasis
+      Regexp.new("(.{1,})(?=#{emphasized_phrase_regex_str})")
+    end
+
+    # TODO: extract all this delimiter stuff to some object probably... it's
+    # getting out of control... but wait until it kinda works first
+    def emphasized_phrase_regex_str
+      all_emphasis_delimeters.map do |opening_emphasis|
+        opening = Regexp.escape(opening_emphasis)
+        closing = Regexp.escape(opening_emphasis.reverse)
+        "(?:#{opening}(?:.+)#{closing})"
+      end.join("|")
+    end
 
     def anything_but(*chars)
       match["^#{chars.join}"].repeat(1)
@@ -128,8 +151,8 @@ module Smashcut
     end
 
     def all_emphasis_delimeters
-      (1..emphasis_characters.length).each_with_object([]) do |index, list|
-        list << emphasis_characters.permutation(index).to_a.map(&:join)
+      (1..emphasis_characters.length).map do |amount_of_emphasizers|
+        emphasis_characters.permutation(amount_of_emphasizers).to_a.map(&:join)
       end.flatten
     end
 

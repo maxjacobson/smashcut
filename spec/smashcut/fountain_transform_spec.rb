@@ -36,10 +36,10 @@ module Smashcut
           Screenplay.new([
             Screenplay::SceneHeading.new("EXT. PARK - DAY"),
             Screenplay::Action.new([
-              Screenplay::PlainTextPhrase.new("A"),
-              Screenplay::ItalicizedPhrase.new("large"),
+              Screenplay::PlainTextPhrase.new("A "),
+              Screenplay::EmphasizedPhrase.new("large", "*"),
               Screenplay::PlainTextPhrase.new(
-                "extended family enjoys a picnic.")])]))
+                " extended family enjoys a picnic.")])]))
       end
     end
   end

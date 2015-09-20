@@ -1,5 +1,6 @@
 module Smashcut
   class Screenplay
+    # TODO: describe me
     class PlainTextPhrase
       attr_reader :text
 
@@ -7,6 +8,7 @@ module Smashcut
         @text = text
       end
 
+      # TODO: test me
       def to_fountain
         text
       end
