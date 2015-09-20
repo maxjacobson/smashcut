@@ -1,7 +1,7 @@
-RSpec.describe Smashcut::FountainParser.new.root do
-  let(:parser) { Smashcut::FountainParser.new }
-
+RSpec.describe Smashcut::FountainParser do
   describe "the entire parser come together" do
+    let(:parser) { described_class.new }
+
     context "when the screenplay is a scene heading and some action" do
       let(:text) { read_fountain "scene heading and action" }
 
@@ -9,7 +9,8 @@ RSpec.describe Smashcut::FountainParser.new.root do
         expect(parser).to parse(text)
           .as(:screenplay => [
             { :scene_heading => "EXT. PARK - DAY" },
-            { :action => "A large extended family enjoys a picnic." }])
+            { :action => [
+              { :plain => "A large extended family enjoys a picnic." }] }])
       end
     end
 
@@ -20,9 +21,9 @@ RSpec.describe Smashcut::FountainParser.new.root do
         expect(parser).to parse(text)
           .as(:screenplay => [
             { :scene_heading => "EXT. CARNIVAL - NIGHT" },
-            { :action => "MAX walks between the games." },
-            { :dialogue => { :character_name => "MAX",
-                             :speech => "Whoa" } }])
+            { :action => [{ :plain => "MAX walks between the games." }] },
+            { :dialogue => {
+              :character_name => "MAX", :speech => "Whoa" } }])
       end
     end
   end
@@ -36,41 +37,47 @@ RSpec.describe Smashcut::FountainParser.new.root do
       end
 
       it "can not parse a string with a scene number after it" do
-        expect(rule).not_to parse "Hello #1#"
+        expect(rule).not_to parse("Hello #1#")
       end
     end
 
     describe "character_name" do
-      let(:character_name) { Smashcut::FountainParser.new.character_name }
+      let(:rule) { Smashcut::FountainParser.new.character_name }
 
-      context "with leading @" do
-        it "can parse names with leading @" do
-          expect(character_name).to parse "@MAX"
-        end
-        it "can parse names with leading @ with lower case letters" do
-          expect(character_name).to parse "@Max Jacobson"
-        end
-        it "annotates the name without the @" do
-          token = character_name.parse "@Max Jacobson"
-          expect(token[:character_name]).to eq "Max Jacobson"
+      context "with leading spiral (@) and all caps" do
+        it "strips out the spiral" do
+          expect(rule).to parse("@MAX").as(:character_name => "MAX")
         end
       end
 
-      context "without leading @" do
-        it "can parse names in all capitals" do
-          expect(character_name).to parse "MAX"
+      context "with leading spiral, mixed case, and space" do
+        it do
+          expect(rule).to parse("@Max Jacobson")
+            .as(:character_name => "Max Jacobson")
         end
+      end
 
-        it "can parse names in all capitals with spaces" do
-          expect(character_name).to parse "MAX JACOBSON"
+      context "when the text is all caps" do
+        it do
+          expect(rule).to parse("MAX").as(:character_name => "MAX")
         end
+      end
 
+      context "when the text is all caps with a space" do
+        it do
+          expect(rule).to parse "MAX JACOBSON"
+        end
+      end
+
+      context "when the text is mixed case, without a leading spiral (@)" do
         it "can not parse names with lower case characters" do
-          expect(character_name).not_to parse "Max Jacobson"
+          expect(rule).not_to parse("Max Jacobson")
         end
+      end
 
-        it "can parse names with numbers" do
-          expect(character_name).to parse "COP 2"
+      context "when the text has a number in it" do
+        it do
+          expect(rule).to parse "COP 2"
         end
       end
     end
@@ -211,7 +218,7 @@ RSpec.describe Smashcut::FountainParser.new.root do
       end
     end
 
-    describe "#scene_number" do
+    describe "scene_number" do
       let(:scene_number) { Smashcut::FountainParser.new.scene_number }
 
       context "when there is a leading space" do
@@ -251,12 +258,152 @@ RSpec.describe Smashcut::FountainParser.new.root do
       end
     end
 
-    describe "action" do
-      let(:action) { Smashcut::FountainParser.new.action }
+    describe "plain_phrase" do
+      let(:rule) { Smashcut::FountainParser.new.plain_phrase }
+      context "when the text is a plain word" do
+        it do
+          expect(rule).to parse("Hello").as(:plain => "Hello")
+        end
+      end
 
-      it "recognizes action" do
-        expect(action).to parse("He walked down the street.")
-          .as(:action => "He walked down the street.")
+      context "when the text is two words, with a space" do
+        it do
+          expect(rule).to parse("Hello world").as(:plain => "Hello world")
+        end
+      end
+
+      context "when the text contains some characters from not English" do
+        let(:text) { "左轉上噴泉" }
+        it do
+          expect(rule).to parse(text).as(:plain => text)
+        end
+      end
+
+      context "when the text is a few words, including punctuation" do
+        let(:text) { "Hello, world! My friend... :)" }
+        it do
+          expect(rule).to parse(text).as(:plain => text)
+        end
+      end
+      context "when the text is followed by emphasized text" do
+        let(:text) { "Hello *my friend!*" }
+        it do
+          expect(rule).to_not parse(text)
+        end
+      end
+    end
+
+    describe "emphasized_phrase" do
+      let(:rule) { Smashcut::FountainParser.new.emphasized_phrase }
+
+      context "when the text is surrounded by stars" do
+        let(:text) { "*omg!*" }
+        it do
+          expect(rule).to parse(text)
+            .as(:emphasized_text => "omg!", :emphasis => "*")
+        end
+      end
+
+      context "when the text is just two stars" do
+        let(:text) { "**" }
+        it do
+          expect(rule).to_not parse(text)
+        end
+      end
+
+      context "when the text is surrounded by _" do
+        let(:text) { "_lol omg_" }
+        it do
+          expect(rule).to parse(text)
+            .as(:emphasized_text => "lol omg", :emphasis => "_")
+        end
+      end
+
+      context "when the text is surrounded by *_" do
+        let(:text) { "*_haha... wow_*" }
+        it do
+          expect(rule).to parse(text)
+            .as(:emphasized_text => "haha... wow", :emphasis => "_*")
+        end
+      end
+
+      context "when the text is surrounded by **" do
+        let(:text) { "**Superlove is a great song.**" }
+        it do
+          expect(rule).to parse(text)
+            .as(:emphasized_text => "Superlove is a great song.",
+                :emphasis => "**")
+        end
+      end
+
+      context "when the text is surrounded by ***" do
+        let(:text) { "***There is a fish!***" }
+        it do
+          expect(rule).to parse(text)
+            .as(:emphasized_text => "There is a fish!", :emphasis => "***")
+        end
+      end
+    end
+
+    describe "action" do
+      let(:rule) { Smashcut::FountainParser.new.action }
+
+      context "when the text is a simple sentence" do
+        let(:text) { "He walked home." }
+        it do
+          expect(rule).to parse(text).as(:action => [{ :plain => text }])
+        end
+      end
+
+      context "when the text is multiple actions" do
+        let(:text) { "He was so happy.\n\nFor a time." }
+        it do
+          expect(rule).to_not parse(text)
+        end
+      end
+
+      context "when the text has some emphasis in it at the beginning" do
+        let(:text) { "*HOLY SHIT* there's a puppy." }
+        it do
+          expect(rule).to parse(text)
+            .as(:action => [
+              { :emphasized_text => "HOLY SHIT", :emphasis => "*" },
+              { :plain => " there's a puppy." }])
+        end
+      end
+
+      context "when the text has some emphasis at the end" do
+        let(:text) { "And then... _HOLY SHIT_" }
+        it do
+          expect(rule).to parse(text)
+            .as(:action => [
+              { :plain => "And then... " },
+              { :emphasized_text => "HOLY SHIT", :emphasis => "_" }])
+        end
+      end
+
+      context "when the text has some emphasis in the middle" do
+        let(:text) { "And then... _HOLY SHIT_ a puppy!" }
+        it do
+          expect(rule).to parse(text)
+            .as(:action => [
+              { :plain => "And then... " },
+              { :emphasized_text => "HOLY SHIT", :emphasis => "_" },
+              { :plain => " a puppy!" }])
+        end
+      end
+
+      # TODO: make this pass
+      context "when the text has multiple emphasises" do
+        let(:text) { "And then... _HOLY SHIT_ *a puppy!*" }
+        xit do
+          expect(rule).to parse(text)
+            .as(:action => [
+              { :plain => "And then... " },
+              { :emphasized_text => "HOLY SHIT", :emphasis => "_" },
+              { :plain => " " },
+              { :emphasized_text => "a puppy!", :emphasis => "*" }])
+        end
       end
     end
   end

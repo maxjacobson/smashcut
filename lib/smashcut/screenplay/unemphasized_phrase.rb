@@ -1,8 +1,8 @@
 module Smashcut
   class Screenplay
-    # eg:
-    # EXT. PARK - DAY
-    class SceneHeading
+    # Represents a bit of text which has no emphasis
+    # Contrast it to {EmphasizedPhrase}
+    class UnemphasizedPhrase
       attr_reader :text
 
       def initialize(text)
@@ -11,10 +11,6 @@ module Smashcut
 
       def to_fountain
         text
-      end
-
-      def ==(other)
-        to_fountain == other.to_fountain
       end
     end
   end
