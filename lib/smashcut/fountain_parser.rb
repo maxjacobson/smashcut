@@ -90,15 +90,17 @@ module Smashcut
     end
 
     # this is kind of a catch-all rule. it should just be one line.
+    # TODO: but... what if the writer uses line breaks for wrapping?
+    # I think that's officially supported, so we should respect that
     rule(:action) do
-      # precedence matters here, because plain_phrase will absorb everything
-      # that is not already matched
-      (italicized_phrase.as(:italicized) |
-       plain_phrase.as(:plain)).repeat(1).as(:action)
+      (italicized_phrase | plain_phrase).repeat(1).as(:action)
     end
 
-    rule(:plain_phrase) { anything_but("\n") }
-    rule(:italicized_phrase) { star >> anything_but("\n", "*") >> star }
+    rule(:plain_phrase) { anything_but("\n").as(:plain) }
+
+    rule(:italicized_phrase) do
+      star >> anything_but("\n", "*").as(:italicized) >> star
+    end
 
     private
 

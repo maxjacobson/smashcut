@@ -10,7 +10,7 @@ RSpec.describe Smashcut::FountainParser do
           .as(:screenplay => [
             { :scene_heading => "EXT. PARK - DAY" },
             { :action => [
-              {:plain => "A large extended family enjoys a picnic." }] }])
+              { :plain => "A large extended family enjoys a picnic." }] }])
       end
     end
 
@@ -258,10 +258,30 @@ RSpec.describe Smashcut::FountainParser do
       end
     end
 
-    # describe "italicized_phrase" do
-    #   let(:rule) { Smashcut::FountainParser.new.italicized_phrase }
-    #   context "when the 
-    # end
+    describe "italicized_phrase" do
+      let(:rule) { Smashcut::FountainParser.new.italicized_phrase }
+
+      context "when the text is surrounded by stars" do
+        let(:text) { "*omg!*" }
+        it do
+          expect(rule).to parse(text).as(:italicized => "omg!")
+        end
+      end
+
+      context "when the text is just two stars" do
+        let(:text) { "**" }
+        it do
+          expect(rule).to_not parse(text)
+        end
+      end
+
+      context "when the text is surrounded by double stars" do
+        let(:text) { "**lol**" }
+        it do
+          expect(rule).to_not parse(text)
+        end
+      end
+    end
 
     describe "action" do
       let(:rule) { Smashcut::FountainParser.new.action }
@@ -280,14 +300,24 @@ RSpec.describe Smashcut::FountainParser do
         end
       end
 
-      context "when the text has some emphasis in it" do
-        let(:text) { "He was *so* happy." }
+      context "when the text has some emphasis in it at the beginning" do
+        let(:text) { "*HOLY SHIT* there's a puppy." }
         it do
           expect(rule).to parse(text)
             .as(:action => [
-              { :plain => "He was" },
-              { :italicized => "so" },
-              { :plain => "happy." }])
+              { :italicized => "HOLY SHIT" },
+              { :plain => " there's a puppy." }])
+        end
+      end
+
+      context "when the text has some emphasis in the middle" do
+        let(:text) { "And then... *HOLY SHIT* a puppy!" }
+        it do
+          expect(rule).to parse(text)
+            .as(:action => [
+              { :plain => "And then... " },
+              { :italicized => "HOLY SHIT" },
+              { :plain => " a puppy." }])
         end
       end
     end
