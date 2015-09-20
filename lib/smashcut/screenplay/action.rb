@@ -1,6 +1,5 @@
 module Smashcut
   class Screenplay
-    # TODO: add specs for this class
     # This is a screenplay element. Perhaps the most common one.
     class Action
       attr_reader :elements
@@ -8,6 +7,7 @@ module Smashcut
       def initialize(phrases)
         @elements = phrases
       end
+
 
       def to_fountain
         elements.map(&:to_fountain).join
