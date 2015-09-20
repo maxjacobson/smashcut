@@ -1,6 +1,7 @@
 module Smashcut
   class Screenplay
-    # TODO: describe me
+    # A bit of text that has some emphasis around it
+    # Contrast it to {UnemphasizedPhrase}
     class EmphasizedPhrase
       attr_reader :text, :emphasis
 
@@ -9,7 +10,6 @@ module Smashcut
         @emphasis = emphasis
       end
 
-      # TODO: test me
       def to_fountain
         "#{emphasis}#{text}#{emphasis.reverse}"
       end

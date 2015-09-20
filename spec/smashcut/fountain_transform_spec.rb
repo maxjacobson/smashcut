@@ -10,7 +10,7 @@ module Smashcut
         expect(screenplay).to eq(
           Screenplay.new([
             Screenplay::Action.new([
-              Screenplay::PlainTextPhrase.new("Max walks home.")])]))
+              Screenplay::UnemphasizedPhrase.new("Max walks home.")])]))
       end
     end
 
@@ -21,9 +21,9 @@ module Smashcut
         expect(screenplay).to eq(
           Screenplay.new([
             Screenplay::Action.new([
-              Screenplay::PlainTextPhrase.new("Max walks home.")]),
+              Screenplay::UnemphasizedPhrase.new("Max walks home.")]),
             Screenplay::Action.new([
-              Screenplay::PlainTextPhrase.new("Max opens his door.")])]))
+              Screenplay::UnemphasizedPhrase.new("Max opens his door.")])]))
       end
     end
 
@@ -36,9 +36,9 @@ module Smashcut
           Screenplay.new([
             Screenplay::SceneHeading.new("EXT. PARK - DAY"),
             Screenplay::Action.new([
-              Screenplay::PlainTextPhrase.new("A "),
+              Screenplay::UnemphasizedPhrase.new("A "),
               Screenplay::EmphasizedPhrase.new("large", "*"),
-              Screenplay::PlainTextPhrase.new(
+              Screenplay::UnemphasizedPhrase.new(
                 " extended family enjoys a picnic.")])]))
       end
     end

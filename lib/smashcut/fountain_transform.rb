@@ -18,7 +18,7 @@ module Smashcut
     end
 
     rule(:plain => simple(:text)) do
-      Screenplay::PlainTextPhrase.new(text.to_s)
+      Screenplay::UnemphasizedPhrase.new(text.to_s)
     end
 
     rule(:emphasized_text => simple(:text), :emphasis => simple(:emphasis)) do

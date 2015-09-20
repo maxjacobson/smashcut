@@ -1,14 +1,14 @@
 module Smashcut
   class Screenplay
-    # TODO: describe me
-    class PlainTextPhrase
+    # Represents a bit of text which has no emphasis
+    # Contrast it to {EmphasizedPhrase}
+    class UnemphasizedPhrase
       attr_reader :text
 
       def initialize(text)
         @text = text
       end
 
-      # TODO: test me
       def to_fountain
         text
       end
