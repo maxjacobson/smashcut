@@ -1,7 +1,7 @@
-RSpec.describe Smashcut::FountainParser.new.root do
-  let(:parser) { Smashcut::FountainParser.new }
-
+RSpec.describe Smashcut::FountainParser do
   describe "the entire parser come together" do
+    let(:parser) { described_class.new }
+
     context "when the screenplay is a scene heading and some action" do
       let(:text) { read_fountain "scene heading and action" }
 
@@ -9,7 +9,8 @@ RSpec.describe Smashcut::FountainParser.new.root do
         expect(parser).to parse(text)
           .as(:screenplay => [
             { :scene_heading => "EXT. PARK - DAY" },
-            { :action => "A large extended family enjoys a picnic." }])
+            { :action => [
+              {:plain => "A large extended family enjoys a picnic." }] }])
       end
     end
 
@@ -20,9 +21,9 @@ RSpec.describe Smashcut::FountainParser.new.root do
         expect(parser).to parse(text)
           .as(:screenplay => [
             { :scene_heading => "EXT. CARNIVAL - NIGHT" },
-            { :action => "MAX walks between the games." },
-            { :dialogue => { :character_name => "MAX",
-                             :speech => "Whoa" } }])
+            { :action => [{ :plain => "MAX walks between the games." }] },
+            { :dialogue => {
+              :character_name => "MAX", :speech => "Whoa" } }])
       end
     end
   end
@@ -257,13 +258,18 @@ RSpec.describe Smashcut::FountainParser.new.root do
       end
     end
 
+    # describe "italicized_phrase" do
+    #   let(:rule) { Smashcut::FountainParser.new.italicized_phrase }
+    #   context "when the 
+    # end
+
     describe "action" do
       let(:rule) { Smashcut::FountainParser.new.action }
 
       context "when the text is a simple sentence" do
         let(:text) { "He walked home." }
         it do
-          expect(rule).to parse(text).as(:action => text)
+          expect(rule).to parse(text).as(:action => [{ :plain => text }])
         end
       end
 

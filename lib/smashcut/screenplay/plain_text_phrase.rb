@@ -1,8 +1,6 @@
 module Smashcut
   class Screenplay
-    # eg:
-    # EXT. PARK - DAY
-    class SceneHeading
+    class PlainTextPhrase
       attr_reader :text
 
       def initialize(text)

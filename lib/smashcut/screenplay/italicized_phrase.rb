@@ -1,16 +1,10 @@
 module Smashcut
   class Screenplay
-    # eg:
-    # EXT. PARK - DAY
-    class SceneHeading
+    class ItalicizedPhrase
       attr_reader :text
 
       def initialize(text)
         @text = text
-      end
-
-      def to_fountain
-        text
       end
     end
   end

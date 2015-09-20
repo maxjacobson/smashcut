@@ -7,10 +7,18 @@ module Smashcut
   class FountainParser < Parslet::Parser
     # entry-point to the parser
     root(:screenplay)
+
+    # screenplay is a bunch of elements spaced out with 2 linebreaks
+    # TODO: maybe it should be 2-or-more linebreaks
     rule(:screenplay) do
       (screenplay_element >>
        line_break.maybe >>
        line_break.maybe).repeat(1).as(:screenplay)
+    end
+
+    # these are all the different parts that make up a screenplay
+    rule(:screenplay_element) do
+      scene_heading | dialogue | action
     end
 
     # simple rules
@@ -22,6 +30,7 @@ module Smashcut
     rule(:spiral) { str("@") }
     rule(:opening_parenthesis) { str("(") }
     rule(:closing_parenthesis) { str(")") }
+    rule(:star) { str("*") }
 
     # TODO: explain what is happening here
     rule(:scene_openers) do
@@ -75,20 +84,21 @@ module Smashcut
     end
 
     rule(:parenthetical) do
-      (
-        opening_parenthesis >>
-        anything_but(")") >>
-        closing_parenthesis
-      ).as(:parenthetical)
+      (opening_parenthesis >>
+       anything_but(")") >>
+       closing_parenthesis).as(:parenthetical)
     end
 
+    # this is kind of a catch-all rule. it should just be one line.
     rule(:action) do
-      scene_openers.absent? >> anything_but("\n").as(:action)
+      # precedence matters here, because plain_phrase will absorb everything
+      # that is not already matched
+      (italicized_phrase.as(:italicized) |
+       plain_phrase.as(:plain)).repeat(1).as(:action)
     end
 
-    rule(:screenplay_element) do
-      scene_heading | dialogue | action
-    end
+    rule(:plain_phrase) { anything_but("\n") }
+    rule(:italicized_phrase) { star >> anything_but("\n", "*") >> star }
 
     private
 

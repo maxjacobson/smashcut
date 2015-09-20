@@ -8,7 +8,9 @@ module Smashcut
   # into various formats (fountain, pdf)
   class FountainTransform < Parslet::Transform
     rule(:screenplay => sequence(:elements)) { Screenplay.new(elements) }
-    rule(:action => simple(:text)) { Screenplay::Action.new(text) }
     rule(:scene_heading => simple(:text)) { Screenplay::SceneHeading.new(text) }
+    rule(:action => sequence(:phrases)) { Screenplay::Action.new(phrases) }
+    rule(:plain => simple(:text)) { Screenplay::PlainTextPhrase.new(text) }
+    rule(:italicized => simple(:text)) { Screenplay::ItalicizedPhrase.new(text) }
   end
 end
