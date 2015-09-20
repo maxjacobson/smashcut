@@ -36,41 +36,47 @@ RSpec.describe Smashcut::FountainParser.new.root do
       end
 
       it "can not parse a string with a scene number after it" do
-        expect(rule).not_to parse "Hello #1#"
+        expect(rule).not_to parse("Hello #1#")
       end
     end
 
     describe "character_name" do
-      let(:character_name) { Smashcut::FountainParser.new.character_name }
+      let(:rule) { Smashcut::FountainParser.new.character_name }
 
-      context "with leading @" do
-        it "can parse names with leading @" do
-          expect(character_name).to parse "@MAX"
-        end
-        it "can parse names with leading @ with lower case letters" do
-          expect(character_name).to parse "@Max Jacobson"
-        end
-        it "annotates the name without the @" do
-          token = character_name.parse "@Max Jacobson"
-          expect(token[:character_name]).to eq "Max Jacobson"
+      context "with leading spiral (@) and all caps" do
+        it "strips out the spiral" do
+          expect(rule).to parse("@MAX").as(:character_name => "MAX")
         end
       end
 
-      context "without leading @" do
-        it "can parse names in all capitals" do
-          expect(character_name).to parse "MAX"
+      context "with leading spiral, mixed case, and space" do
+        it do
+          expect(rule).to parse("@Max Jacobson")
+            .as(:character_name => "Max Jacobson")
         end
+      end
 
-        it "can parse names in all capitals with spaces" do
-          expect(character_name).to parse "MAX JACOBSON"
+      context "when the text is all caps" do
+        it do
+          expect(rule).to parse("MAX").as(:character_name => "MAX")
         end
+      end
 
+      context "when the text is all caps with a space" do
+        it do
+          expect(rule).to parse "MAX JACOBSON"
+        end
+      end
+
+      context "when the text is mixed case, without a leading spiral (@)" do
         it "can not parse names with lower case characters" do
-          expect(character_name).not_to parse "Max Jacobson"
+          expect(rule).not_to parse("Max Jacobson")
         end
+      end
 
-        it "can parse names with numbers" do
-          expect(character_name).to parse "COP 2"
+      context "when the text has a number in it" do
+        it do
+          expect(rule).to parse "COP 2"
         end
       end
     end
@@ -211,7 +217,7 @@ RSpec.describe Smashcut::FountainParser.new.root do
       end
     end
 
-    describe "#scene_number" do
+    describe "scene_number" do
       let(:scene_number) { Smashcut::FountainParser.new.scene_number }
 
       context "when there is a leading space" do
@@ -252,11 +258,31 @@ RSpec.describe Smashcut::FountainParser.new.root do
     end
 
     describe "action" do
-      let(:action) { Smashcut::FountainParser.new.action }
+      let(:rule) { Smashcut::FountainParser.new.action }
 
-      it "recognizes action" do
-        expect(action).to parse("He walked down the street.")
-          .as(:action => "He walked down the street.")
+      context "when the text is a simple sentence" do
+        let(:text) { "He walked home." }
+        it do
+          expect(rule).to parse(text).as(:action => text)
+        end
+      end
+
+      context "when the text is multiple lines" do
+        let(:text) { "He was so happy.\n\nFor a time." }
+        it do
+          expect(rule).to_not parse(text)
+        end
+      end
+
+      context "when the text has some emphasis in it" do
+        let(:text) { "He was *so* happy." }
+        it do
+          expect(rule).to parse(text)
+            .as(:action => [
+              { :plain => "He was" },
+              { :italicized => "so" },
+              { :plain => "happy." }])
+        end
       end
     end
   end
