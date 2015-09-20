@@ -8,7 +8,6 @@ module Smashcut
         @elements = phrases
       end
 
-
       def to_fountain
         elements.map(&:to_fountain).join
       end
