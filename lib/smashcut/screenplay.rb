@@ -2,9 +2,8 @@ require "smashcut/screenplay/scene_heading"
 require "smashcut/screenplay/action"
 
 module Smashcut
-  # TODO: add specs for this class
-  # This is the object that represents a screenplay, and knows how to convert
-  # to various formats
+  # This is the object that represents a screenplay, which can offer some info
+  # about the screenplay and convert it to various formats (eventually)
   class Screenplay
     attr_reader :elements
 
@@ -12,6 +11,7 @@ module Smashcut
       @elements = elements
     end
 
+    # How many scenes are in this screenplay?
     def scene_count
       elements.count { |el| el.is_a?(SceneHeading) }
     end

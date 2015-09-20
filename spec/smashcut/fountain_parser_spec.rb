@@ -1,61 +1,42 @@
 RSpec.describe Smashcut::FountainParser.new.root do
-  let(:parser) { Smashcut::FountainParser.new.root }
-  describe '#parse' do
-    describe "action" do
-      let(:text) do
-        "EXT. PARK - DAY\n\nA large extended family enjoys a picnic."
-      end
+  let(:parser) { Smashcut::FountainParser.new }
 
-      it "recognizes action following a scene heading" do
+  describe "the entire parser come together" do
+    context "when the screenplay is a scene heading and some action" do
+      let(:text) { read_fountain "scene heading and action" }
+
+      it "should parse the screenplay" do
         expect(parser).to parse(text)
-      end
-
-      it "knows which part is the scene heading and which part is the action" do
-        first, second = parser.parse(text).fetch(:screenplay)
-        expect(first[:scene_heading]).to eq "EXT. PARK - DAY"
-        expect(second[:action]).to eq "A large extended family enjoys a picnic."
+          .as(:screenplay => [
+            { :scene_heading => "EXT. PARK - DAY" },
+            { :action => "A large extended family enjoys a picnic." }])
       end
     end
 
-    describe "dialogue" do
-      let(:text) do
-        "EXT. CARNIVAL - NIGHT\n\nMAX walks between the games.\n\nMAX\nWhoa"
-      end
+    context "when the screenplay is a scene heading, action, and dialogue" do
+      let(:text) { read_fountain "scene heading action and dialogue" }
 
-      it "can parse this scene" do
-        expect(parser).to parse text
-      end
-
-      it "can annotate this scene" do
-        first, second, third = parser.parse(text).fetch(:screenplay)
-        expect(first[:scene_heading]).to eq "EXT. CARNIVAL - NIGHT"
-        expect(second[:action]).to eq "MAX walks between the games."
-        expect(third[:dialogue][:character_name]).to eq "MAX"
-        expect(third[:dialogue][:speech]).to eq "Whoa"
+      it "should parse the screenplay" do
+        expect(parser).to parse(text)
+          .as(:screenplay => [
+            { :scene_heading => "EXT. CARNIVAL - NIGHT" },
+            { :action => "MAX walks between the games." },
+            { :dialogue => { :character_name => "MAX",
+                             :speech => "Whoa" } }])
       end
     end
+  end
+
+  describe "individual rules" do
     describe "anything_but_scene_number" do
       let(:rule) { Smashcut::FountainParser.new.anything_but_scene_number }
 
       it "can parse a simple string" do
-        expect(rule).to parse "Hello"
+        expect(rule).to parse("Hello").as("Hello")
       end
 
       it "can not parse a string with a scene number after it" do
         expect(rule).not_to parse "Hello #1#"
-      end
-    end
-
-    describe "anything_but" do
-      let(:parser) { Smashcut::FountainParser.new }
-      it "should not parse input with excluded characters" do
-        rule = parser.anything_but("a")
-        expect(rule).not_to parse "veronica"
-      end
-
-      it "should parse input without exlcuded characters" do
-        rule = parser.anything_but("q")
-        expect(rule).to parse "veronica"
       end
     end
 
@@ -230,62 +211,53 @@ RSpec.describe Smashcut::FountainParser.new.root do
       end
     end
 
-    describe "scene_number" do
+    describe "#scene_number" do
       let(:scene_number) { Smashcut::FountainParser.new.scene_number }
 
-      describe "the syntax" do
-        it "can parse normal ones" do
-          expect(scene_number).to parse " #1#"
-        end
-        it "can parse without a space" do
-          expect(scene_number).to parse "#1#"
-        end
-        it "can parse repeating numbers" do
-          expect(scene_number).to parse "#1111#"
-        end
-        it "can parse non-digit characters" do
-          expect(scene_number).to parse "#two#"
-        end
-        it "can parse a few other characters" do
-          expect(scene_number).to parse "#1.#"
-          expect(scene_number).to parse "#1-1#"
+      context "when there is a leading space" do
+        it do
+          expect(scene_number).to parse(" #1#").as(:scene_number => "1")
         end
       end
 
-      describe "annotation" do
-        it "can capture digits" do
-          expect(scene_number.parse("#1#")[:scene_number]).to eq "1"
+      context "when there is no leading space" do
+        it do
+          expect(scene_number).to parse("#1#").as(:scene_number => "1")
         end
-        it "can capture repeating digits" do
-          expect(scene_number.parse("#111#")[:scene_number]).to eq "111"
+      end
+
+      context "when there are repeating numbers" do
+        it do
+          expect(scene_number).to parse("#1111#").as(:scene_number => "1111")
+        end
+      end
+
+      context "when there are non digit characters" do
+        it do
+          expect(scene_number).to parse("#two#").as(:scene_number => "two")
+        end
+      end
+
+      context "when there are is a period" do
+        it do
+          expect(scene_number).to parse("#1.#").as(:scene_number => "1.")
+        end
+      end
+
+      context "when there is a dash" do
+        it do
+          expect(scene_number).to parse("#1-1#").as(:scene_number => "1-1")
         end
       end
     end
 
     describe "action" do
       let(:action) { Smashcut::FountainParser.new.action }
+
       it "recognizes action" do
-        expect(action).to parse "He walked down the street."
-      end
-      it "annotates correctly" do
-        action_text = action.parse("Gum stuck to his shoe")[:action]
-        expect(action_text).to eq "Gum stuck to his shoe"
+        expect(action).to parse("He walked down the street.")
+          .as(:action => "He walked down the street.")
       end
     end
-
-    describe "dual dialogue"
-    describe "lyrics"
-    describe "transition"
-    describe "centered text"
-    describe "emphasis"
-    describe "title page"
-    describe "page breaks"
-    describe "punctuation"
-    describe "line breaks"
-    describe "indenting"
-    describe "notes"
-    describe "boneyard"
-    describe "sections and synopses"
-    describe "error handling"
   end
 end

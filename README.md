@@ -41,6 +41,13 @@ If you'd like to run the tests and linter, just run `bundle exec rake`. Another
 option you have is to run `bundle exec guard`, which will auto-run tests when
 ou edit files.
 
+### docs
+
+If you'd like to browse the docs, run `bundle exec yard server -r` which spins
+up a server you can visit in your browser at <http://localhost:8808>. When
+adding inline documentation (comments above classes, methods, etc) please use
+the yard syntax.
+
 ### Contributing
 
 1. Fork it ( https://github.com/maxjacobson/smashcut/fork )
