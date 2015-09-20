@@ -11,6 +11,6 @@ module Smashcut
     rule(:scene_heading => simple(:text)) { Screenplay::SceneHeading.new(text) }
     rule(:action => sequence(:phrases)) { Screenplay::Action.new(phrases) }
     rule(:plain => simple(:text)) { Screenplay::PlainTextPhrase.new(text) }
-    rule(:italicized => simple(:text)) { Screenplay::ItalicizedPhrase.new(text) }
+    rule(:italicized => simple(:txt)) { Screenplay::ItalicizedPhrase.new(txt) }
   end
 end

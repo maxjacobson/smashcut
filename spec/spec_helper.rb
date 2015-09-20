@@ -21,5 +21,5 @@ RSpec.configure do |config|
   config.order = :random
 
   # enables `bundle exec rspec --only-failure` for reruns
-  config.example_status_persistence_file_path = 'rspec.results'
+  config.example_status_persistence_file_path = "rspec.results"
 end

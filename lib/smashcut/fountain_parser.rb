@@ -23,6 +23,7 @@ module Smashcut
 
     # simple rules
     rule(:line_break) { str("\n") }
+    rule(:double_line_break) { line_break >> line_break }
     rule(:dot) { str(".") }
     rule(:space) { str(" ") }
     rule(:hash) { str('#') }
@@ -89,23 +90,51 @@ module Smashcut
        closing_parenthesis).as(:parenthetical)
     end
 
-    # this is kind of a catch-all rule. it should just be one line.
-    # TODO: but... what if the writer uses line breaks for wrapping?
-    # I think that's officially supported, so we should respect that
     rule(:action) do
-      (italicized_phrase | plain_phrase).repeat(1).as(:action)
+      (emphasized_phrase | plain_phrase).repeat(1).as(:action)
     end
 
-    rule(:plain_phrase) { anything_but("\n").as(:plain) }
+    rule(:plain_phrase) do
+      anything_but("\n").as(:plain) >> emphasized_phrase.absent?
+    end
 
-    rule(:italicized_phrase) do
-      star >> anything_but("\n", "*").as(:italicized) >> star
+    # whichever chars were used at the start, the reverse should end it
+    rule(:emphasized_phrase) do
+      emphasis_delimiter.capture(:open_emphasis) >> dynamic do |_src, context|
+        open_emphasis = context.captures[:open_emphasis].to_s
+        close_emphasis = open_emphasis.reverse
+        anything_but("\n", close_emphasis).as(:emphasized_text) >>
+          str(close_emphasis).as(:emphasis)
+      end
     end
 
     private
 
     def anything_but(*chars)
       match["^#{chars.join}"].repeat(1)
+    end
+
+    # TODO: look up how to spell delimiter/delimeter, use it consistently
+    # this makes every permutation of emphasis characters and makes a rule that
+    # matches any of them
+    # sorted by length so the longer ones have higher precedence
+    def emphasis_delimiter
+      return @emphasis_delimiter if defined?(@emphasis_delimiter)
+      @emphasis_delimiter = all_emphasis_delimeters
+                            .sort_by(&:length)
+                            .reverse
+                            .map { |delimeter| str(delimeter) }
+                            .reduce(:|)
+    end
+
+    def all_emphasis_delimeters
+      (1..emphasis_characters.length).each_with_object([]) do |index, list|
+        list << emphasis_characters.permutation(index).to_a.map(&:join)
+      end.flatten
+    end
+
+    def emphasis_characters
+      @emphasis_characters ||= ["*", "**", "_"]
     end
   end
 end
