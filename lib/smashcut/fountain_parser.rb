@@ -1,4 +1,5 @@
 require "parslet"
+require "smashcut/fountain_emphasis"
 
 module Smashcut
   # This class parses fountain text and annotates what it finds
@@ -97,10 +98,10 @@ module Smashcut
     rule(:plain_phrase) do
       dynamic do |source, _context|
         if (index = source.match(stuff_then_emphasis))
+          # saw an emphasis ahead, so just gonna eat up until that
           current_bytepos = source.bytepos
           plain_segment = source.consume(index).to_s
           source.bytepos = current_bytepos
-          # saw an emphasis ahead, so just gonna eat up until that
           str(plain_segment).as(:plain)
         else
           # did not see a coming emphasis, so just gonna gobble up the rest of
@@ -123,44 +124,21 @@ module Smashcut
     private
 
     def stuff_then_emphasis
-      Regexp.new("(.{1,})(?=#{emphasized_phrase_regex_str}.{0,})")
-    end
-
-    # TODO: extract all this delimiter stuff to some object probably... it's
-    # getting out of control... but wait until it kinda works first
-    def emphasized_phrase_regex_str
-      all_emphasis_delimeters.map do |opening_emphasis|
-        opening = Regexp.escape(opening_emphasis)
-        closing = Regexp.escape(opening_emphasis.reverse)
-        "(?:#{opening}(?:.+)#{closing})"
-      end.join("|")
+      FountainEmphasis.instance.stuff_then_emphasis_pattern
     end
 
     def anything_but(*chars)
       match["^#{chars.join}"].repeat(1)
     end
 
-    # TODO: look up how to spell delimiter/delimeter, use it consistently
     # this makes every permutation of emphasis characters and makes a rule that
     # matches any of them
     # sorted by length so the longer ones have higher precedence
     def emphasis_delimiter
       return @emphasis_delimiter if defined?(@emphasis_delimiter)
-      @emphasis_delimiter = all_emphasis_delimeters
-                            .sort_by(&:length)
-                            .reverse
+      @emphasis_delimiter = FountainEmphasis.instance.longlist
                             .map { |delimeter| str(delimeter) }
                             .reduce(:|)
-    end
-
-    def all_emphasis_delimeters
-      (1..emphasis_characters.length).map do |amount_of_emphasizers|
-        emphasis_characters.permutation(amount_of_emphasizers).to_a.map(&:join)
-      end.flatten
-    end
-
-    def emphasis_characters
-      @emphasis_characters ||= ["*", "**", "_"]
     end
   end
 end

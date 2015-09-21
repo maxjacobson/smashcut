@@ -22,4 +22,8 @@ RSpec.configure do |config|
 
   # enables `bundle exec rspec --only-failure` for reruns
   config.example_status_persistence_file_path = "rspec.results"
+
+  # allow to focus on one thing at a time if you like, by adding the focus tag
+  config.filter_run_including :focus => true
+  config.run_all_when_everything_filtered = true
 end
