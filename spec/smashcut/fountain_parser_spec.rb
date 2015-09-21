@@ -394,17 +394,17 @@ RSpec.describe Smashcut::FountainParser do
       end
 
       # TODO: make this pass
-      # context "when the text has multiple emphasises" do
-      #   let(:text) { "And then... _HOLY SHIT_ *a puppy!*" }
-      #   it do
-      #     expect(rule).to parse(text)
-      #       .as(:action => [
-      #         { :plain => "And then... " },
-      #         { :emphasized_text => "HOLY SHIT", :emphasis => "_" },
-      #         { :plain => " " },
-      #         { :emphasized_text => "a puppy!", :emphasis => "*"}])
-      #   end
-      # end
+      context "when the text has multiple emphasises" do
+        let(:text) { "And then... _HOLY SHIT_ *a puppy!*" }
+        xit do
+          expect(rule).to parse(text)
+            .as(:action => [
+              { :plain => "And then... " },
+              { :emphasized_text => "HOLY SHIT", :emphasis => "_" },
+              { :plain => " " },
+              { :emphasized_text => "a puppy!", :emphasis => "*" }])
+        end
+      end
     end
   end
 end

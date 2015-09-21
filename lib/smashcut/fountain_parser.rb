@@ -100,8 +100,11 @@ module Smashcut
           current_bytepos = source.bytepos
           plain_segment = source.consume(index).to_s
           source.bytepos = current_bytepos
+          # saw an emphasis ahead, so just gonna eat up until that
           str(plain_segment).as(:plain)
         else
+          # did not see a coming emphasis, so just gonna gobble up the rest of
+          # the line
           anything_but("\n").as(:plain)
         end
       end
@@ -120,7 +123,7 @@ module Smashcut
     private
 
     def stuff_then_emphasis
-      Regexp.new("(.{1,})(?=#{emphasized_phrase_regex_str})")
+      Regexp.new("(.{1,})(?=#{emphasized_phrase_regex_str}.{0,})")
     end
 
     # TODO: extract all this delimiter stuff to some object probably... it's
