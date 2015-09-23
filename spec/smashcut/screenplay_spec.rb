@@ -32,7 +32,7 @@ module Smashcut
 
         it "creates a pdf" do
           expect(pdf_path).to_not have_pdf("action")
-          screenplay.make_pdf(pdf_path("action").to_s)
+          screenplay.to_pdf(pdf_path("action").to_s)
           expect(pdf_path).to have_pdf("action")
         end
       end

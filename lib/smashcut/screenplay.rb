@@ -16,14 +16,18 @@ module Smashcut
       @elements = elements
     end
 
-    # TODO: actually create a pdf!
-    def make_pdf(path)
-      FileUtils.touch(path)
+    def to_pdf(path)
+      PdfGenerator.new(self).write(path)
     end
 
     # How many scenes are in this screenplay?
     def scene_count
       elements.count { |el| el.is_a?(SceneHeading) }
+    end
+
+    # TODO: test me and improve
+    def to_fountain
+      elements.map(&:to_fountain).join("\n\n")
     end
 
     def ==(other)

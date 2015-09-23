@@ -8,9 +8,11 @@ module Smashcut
         @screenplay = screenplay
       end
 
+      # TODO: be much cleverer
       def write(path)
+        txt = screenplay.to_fountain
         Prawn::Document.generate(path) do
-          text screenplay.to_fountain
+          text txt
         end
       end
 
