@@ -24,5 +24,12 @@ module Smashcut
     rule(:emphasized_text => simple(:text), :emphasis => simple(:emphasis)) do
       Screenplay::EmphasizedPhrase.new(text.to_s, emphasis.to_s)
     end
+
+    rule(:character_name => simple(:name), :speech => simple(:speech)) do
+      Screenplay::Line.new(name.to_s, speech.to_s)
+    end
+
+    # TODO: maybe we don't need this double-wrapping?
+    rule(:dialogue => simple(:line)) { Screenplay::Dialogue.new(line) }
   end
 end

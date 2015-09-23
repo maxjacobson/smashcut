@@ -1,5 +1,8 @@
+require "smashcut/screenplay/concerns/screenplay_component"
 require "smashcut/screenplay/scene_heading"
 require "smashcut/screenplay/action"
+require "smashcut/screenplay/dialogue"
+require "smashcut/screenplay/line"
 require "smashcut/screenplay/unemphasized_phrase"
 require "smashcut/screenplay/emphasized_phrase"
 

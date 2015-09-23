@@ -3,6 +3,8 @@ module Smashcut
     # eg:
     # EXT. PARK - DAY
     class SceneHeading
+      include ScreenplayComponent
+
       attr_reader :text
 
       def initialize(text)
@@ -11,10 +13,6 @@ module Smashcut
 
       def to_fountain
         text
-      end
-
-      def ==(other)
-        to_fountain == other.to_fountain
       end
     end
   end

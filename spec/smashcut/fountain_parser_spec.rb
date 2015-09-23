@@ -1,3 +1,6 @@
+# Some helpful rspec matchers from parslet
+require "parslet/rig/rspec"
+
 RSpec.describe Smashcut::FountainParser do
   describe "the entire parser come together" do
     let(:parser) { described_class.new }

@@ -3,6 +3,8 @@ module Smashcut
     # A bit of text that has some emphasis around it
     # Contrast it to {UnemphasizedPhrase}
     class EmphasizedPhrase
+      include ScreenplayComponent
+
       attr_reader :text, :emphasis
 
       def initialize(text, emphasis)

@@ -42,5 +42,20 @@ module Smashcut
                 " extended family enjoys a picnic.")])]))
       end
     end
+
+    context "when the fountain text has some dialogue" do
+      let(:fountain_text) { read_fountain "scene heading action and dialogue" }
+
+      it "makes a screenplay" do
+        expect(screenplay).to eq(
+          Screenplay.new([
+            Screenplay::SceneHeading.new("EXT. CARNIVAL - NIGHT"),
+            Screenplay::Action.new([
+              Screenplay::UnemphasizedPhrase.new(
+                "MAX walks between the games.")]),
+            Screenplay::Dialogue.new(
+              Screenplay::Line.new("MAX", "Whoa"))]))
+      end
+    end
   end
 end
