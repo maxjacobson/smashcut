@@ -53,8 +53,7 @@ module Smashcut
             Screenplay::Action.new([
               Screenplay::UnemphasizedPhrase.new(
                 "MAX walks between the games.")]),
-            Screenplay::Dialogue.new(
-              Screenplay::Line.new("MAX", "Whoa"))]))
+            Screenplay::Line.new("MAX", "Whoa")]))
       end
     end
   end

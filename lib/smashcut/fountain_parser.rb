@@ -64,25 +64,28 @@ module Smashcut
       leading_dot_scene_heading | whitelisted_scene_openers_scene_heading
     end
 
-    rule(:spiral_character_name) do
-      spiral >> anything_but("\n").as(:character_name)
+    rule(:spiral_character) do
+      spiral >> anything_but("\n").as(:character)
     end
 
-    rule(:no_spiral_character_name) do
-      anything_but("a-z", "\n").as(:character_name)
+    rule(:no_spiral_character) do
+      anything_but("a-z", "\n").as(:character)
     end
 
-    rule(:character_name) do
-      spiral_character_name | no_spiral_character_name
+    rule(:character) do
+      spiral_character | no_spiral_character
     end
 
-    rule(:speech) do
-      anything_but("\n").as(:speech)
+    rule(:line) do
+      anything_but("\n").as(:line)
     end
 
     rule(:dialogue) do
-      (character_name >> line_break >>
-        (parenthetical >> line_break).maybe >> speech).as(:dialogue)
+      character >>
+        line_break >>
+        (parenthetical >> line_break).maybe >>
+        line >>
+        line_break.maybe
     end
 
     rule(:parenthetical) do
