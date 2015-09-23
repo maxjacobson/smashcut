@@ -15,6 +15,11 @@ module Smashcut
       @elements = elements
     end
 
+    # TODO: actually create a pdf!
+    def make_pdf(path)
+      FileUtils.touch(path)
+    end
+
     # How many scenes are in this screenplay?
     def scene_count
       elements.count { |el| el.is_a?(SceneHeading) }
