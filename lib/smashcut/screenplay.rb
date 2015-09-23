@@ -4,7 +4,7 @@ require "smashcut/screenplay/action"
 require "smashcut/screenplay/line"
 require "smashcut/screenplay/unemphasized_phrase"
 require "smashcut/screenplay/emphasized_phrase"
-require "smashcut/screenplay/pdf_generator"
+require "smashcut/pdf_generator"
 
 module Smashcut
   # This is the object that represents a screenplay, which can offer some info
