@@ -3,14 +3,14 @@ require "smashcut/screenplay"
 
 module Smashcut
   # So you got a {Screenplay}, kid? Want a pdf from it?
-  # TODO: add specs specifically for this
   class PdfGenerator
     def initialize(screenplay)
+      fail ArgumentError unless screenplay.is_a?(Screenplay)
       @screenplay = screenplay
     end
 
     # TODO: be much cleverer
-    def write(path)
+    def write(path:)
       txt = screenplay.to_fountain
       Prawn::Document.generate(path) do
         text txt

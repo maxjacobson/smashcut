@@ -1,5 +1,17 @@
 module Smashcut
   RSpec.describe Screenplay do
+    # TODO: this might be the public interface here, so this may be the place
+    # to rescue parslet/prawn errors and reraise.. probs
+    describe "::from_fountain" do
+      it "parses and transforms the fountain input" do
+        screenplay = Screenplay.from_fountain("Hello world")
+        expect(screenplay).to eq(
+          Screenplay.new([
+            Screenplay::Action.new([
+              Screenplay::UnemphasizedPhrase.new("Hello world")])]))
+      end
+    end
+
     let(:screenplay) { described_class.new(elements) }
     describe "#scene_count" do
       context "when there is one scene heading" do
@@ -21,19 +33,22 @@ module Smashcut
     end
 
     describe "#to_pdf" do
-      after(:each) { clean_up_pdfs }
-
       context "when the PDF is just some action" do
         let(:elements) do
-          [
-            Screenplay::Action.new([
-              Screenplay::UnemphasizedPhrase.new("Hello world!")])]
+          [Screenplay::Action.new([
+            Screenplay::UnemphasizedPhrase.new("Hello world!")])]
         end
 
+        let(:path) { pdf_path("action").to_s }
+
         it "creates a pdf" do
-          expect(pdf_path).to_not have_pdf("action")
-          screenplay.to_pdf(pdf_path("action").to_s)
-          expect(pdf_path).to have_pdf("action")
+          pdf_generator = instance_spy("PdfGenerator")
+          expect(PdfGenerator).to receive(:new).with(screenplay)
+            .and_return(pdf_generator)
+
+          screenplay.to_pdf(:path => path)
+
+          expect(pdf_generator).to have_received(:write).with(:path => path)
         end
       end
     end

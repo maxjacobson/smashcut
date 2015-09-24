@@ -1,9 +1,13 @@
+require "smashcut/fountain_parser"
+require "smashcut/fountain_transform"
+
 require "smashcut/screenplay/concerns/screenplay_component"
 require "smashcut/screenplay/scene_heading"
 require "smashcut/screenplay/action"
 require "smashcut/screenplay/line"
 require "smashcut/screenplay/unemphasized_phrase"
 require "smashcut/screenplay/emphasized_phrase"
+
 require "smashcut/pdf_generator"
 
 module Smashcut
@@ -16,8 +20,15 @@ module Smashcut
       @elements = elements
     end
 
-    def to_pdf(path)
-      PdfGenerator.new(self).write(path)
+    # TODO: add ::from_pdf
+    # TODO: add ::from_fdx
+    def self.from_fountain(fountain)
+      FountainTransform.new.apply(
+        FountainParser.new.parse(fountain))
+    end
+
+    def to_pdf(path:)
+      PdfGenerator.new(self).write(:path => path)
     end
 
     # How many scenes are in this screenplay?
