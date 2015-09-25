@@ -1,9 +1,5 @@
 module Smashcut
   RSpec.describe PdfGenerator do
-    # running before, not after, so I can look at what the tests are making
-    # if I want to. it'll run before *each spec* (in this group) so I just get
-    # to look at the last one, but still, I can work with that
-    before { clean_up_pdfs }
     let(:pdf_generator) { described_class.new(screenplay) }
     let(:screenplay) { Screenplay.from_fountain(fountain_text) }
 
@@ -15,6 +11,10 @@ module Smashcut
     end
 
     context "when the fountain is simple" do
+      # running before, not after, so I can look at what the tests are making
+      # if I want to. it'll run before *each spec* (in this group) so I just get
+      # to look at the last one, but still, I can work with that
+      before { clean_up_pdfs }
       let(:fountain_text) { read_fountain "scene heading action and dialogue" }
       let(:path) { pdf_path("tarrytown") }
 
