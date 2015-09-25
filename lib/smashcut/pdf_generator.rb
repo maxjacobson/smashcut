@@ -19,14 +19,18 @@ module Smashcut
     def go_for_it
       font("Courier") do
         screenplay.elements.each do |element|
-          if element.is_a?(Screenplay::Line)
-            text element.name, :align => :center
-            text element.speech, :align => :center
-          else
-            text element.to_fountain
-            move_down 5
-          end
+          coerce(element)
         end
+      end
+    end
+
+    def coerce(element)
+      if element.is_a?(Screenplay::Line)
+        text element.name, :align => :center
+        text element.speech, :align => :center
+      else
+        text element.to_fountain
+        move_down 5
       end
     end
   end
