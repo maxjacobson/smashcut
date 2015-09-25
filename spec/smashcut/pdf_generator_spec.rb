@@ -20,7 +20,7 @@ module Smashcut
 
       it "produces a pdf" do
         expect(pdf_path).to_not have_pdf("tarrytown")
-        pdf_generator.write(:path => path)
+        pdf_generator.save_as(path)
         expect(pdf_path).to have_pdf("tarrytown")
       end
     end

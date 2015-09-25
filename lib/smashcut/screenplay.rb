@@ -28,7 +28,7 @@ module Smashcut
     end
 
     def to_pdf(path:)
-      PdfGenerator.new(self).write(:path => path)
+      PdfGenerator.new(self).save_as(path)
     end
 
     # How many scenes are in this screenplay?

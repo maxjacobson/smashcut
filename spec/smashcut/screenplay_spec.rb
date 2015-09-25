@@ -42,13 +42,12 @@ module Smashcut
         let(:path) { pdf_path("action").to_s }
 
         it "creates a pdf" do
-          pdf_generator = instance_spy("PdfGenerator")
+          pdf_generator = instance_double(PdfGenerator)
           expect(PdfGenerator).to receive(:new).with(screenplay)
             .and_return(pdf_generator)
 
+          expect(pdf_generator).to receive(:save_as).with(path)
           screenplay.to_pdf(:path => path)
-
-          expect(pdf_generator).to have_received(:write).with(:path => path)
         end
       end
     end
