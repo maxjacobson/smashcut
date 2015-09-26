@@ -39,7 +39,7 @@ you'd like to try it, you can follow these steps:
 
 If you'd like to run the tests and linter, just run `bundle exec rake`. Another
 option you have is to run `bundle exec guard`, which will auto-run tests when
-ou edit files.
+you edit files.
 
 ### docs
 
