@@ -1,19 +1,17 @@
 module Smashcut
   class Screenplay
-    # This is a line of dialogue. it knows who said it, and what was said
+    # A specific line of dialogue. Helps make up a block of {Dialogue}.
     class Line
       include ScreenplayComponent
 
-      attr_reader :name, :speech
+      attr_reader :text
 
-      def initialize(name, speech)
-        @name = name
-        @speech = speech
+      def initialize(text)
+        @text = text
       end
 
-      # TODO: test me
       def to_fountain
-        "#{name}\n#{speech}"
+        text
       end
     end
   end

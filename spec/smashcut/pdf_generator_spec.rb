@@ -15,7 +15,10 @@ module Smashcut
       # if I want to. it'll run before *each spec* (in this group) so I just get
       # to look at the last one, but still, I can work with that
       before { clean_up_pdfs }
-      let(:fountain_text) { read_fountain "scene heading action and dialogue" }
+      let(:fountain_text) do
+        read_fountain "dialogue with multiple parentheticals"
+      end
+
       let(:path) { pdf_path("tarrytown") }
 
       it "produces a pdf" do

@@ -25,7 +25,7 @@ RSpec.describe Smashcut::FountainParser do
           .as(:screenplay => [
             { :scene_heading => "EXT. CARNIVAL - NIGHT" },
             { :action => [{ :plain => "MAX walks between the games." }] },
-            { :character => "MAX", :line => "Whoa" }])
+            { :character => "MAX", :lines => [{ :line => "Whoa" }] }])
       end
     end
   end
@@ -87,34 +87,45 @@ RSpec.describe Smashcut::FountainParser do
     describe "dialogue" do
       let(:rule) { Smashcut::FountainParser.new.dialogue }
 
-      context "with parentheticals" do
-        describe "simple parentheticals" do
-          let(:text) do
-            read_fountain("simple dialogue with parenthetical")
-          end
+      context "when there is one parenthetical" do
+        let(:text) do
+          read_fountain("simple dialogue with parenthetical")
+        end
 
-          it "can parse dialogue with parentheticals" do
-            expect(rule).to parse(text)
-              .as(:character => "BUD",
-                  :parenthetical => "(stoned)", # TODO: snip out the parens
-                  :line => "Whoa, show me that again...")
-          end
+        it do
+          expect(rule).to parse(text)
+            .as(:character => "BUD",
+                :lines => [{ :parenthetical => "(stoned)",
+                             :line => "Whoa, show me that again..." }])
         end
       end
 
-      context "without parentheticals" do
-        describe "simple dialogue" do
-          let(:text) { "MAX\nWhat time is your train?" }
+      context "when there are two parentheticals" do
+        let(:text) { read_fountain "dialogue with multiple parentheticals" }
 
-          it "can parse simple dialogue" do
-            expect(rule).to parse(text)
-              .as(:character => "MAX",
-                  :line => "What time is your train?")
-          end
+        it do
+          expect(rule).to parse(text)
+            .as(:character => "STEVE",
+                :lines => [
+                  { :parenthetical => "(wanly)",
+                    :line => "Everything is going dark..." },
+                  { :parenthetical => "(beat)",
+                    :line => "Someone turn the lights on..." }])
+        end
+      end
+
+      context "when there is no parenthetical" do
+        let(:text) { "MAX\nWhat time is your train?" }
+
+        it "can parse simple dialogue" do
+          expect(rule).to parse(text)
+            .as(:character => "MAX",
+                :lines => [{ :line => "What time is your train?" }])
         end
       end
     end
 
+    # TODO: snip out the parens from the parsed value
     describe "parenthetical" do
       let(:rule) { Smashcut::FountainParser.new.parenthetical }
 

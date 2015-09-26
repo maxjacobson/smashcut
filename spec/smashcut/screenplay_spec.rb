@@ -3,12 +3,41 @@ module Smashcut
     # TODO: this might be the public interface here, so this may be the place
     # to rescue parslet/prawn errors and reraise.. probs
     describe "::from_fountain" do
-      it "parses and transforms the fountain input" do
-        screenplay = Screenplay.from_fountain("Hello world")
-        expect(screenplay).to eq(
-          Screenplay.new([
-            Screenplay::Action.new([
-              Screenplay::UnemphasizedPhrase.new("Hello world")])]))
+      context "when it succeeds" do
+        it "parses and transforms the fountain input" do
+          screenplay = Screenplay.from_fountain("Hello world")
+          expect(screenplay).to eq(
+            Screenplay.new([
+              Screenplay::Action.new([
+                Screenplay::UnemphasizedPhrase.new("Hello world")])]))
+        end
+      end
+
+      context "when it fails to parse the input" do
+        before do
+          parser = instance_double(FountainParser)
+          expect(FountainParser).to receive(:new).and_return(parser)
+          exception = Parslet::ParseFailed.new("something went wrong...")
+          expect(parser).to receive(:parse).and_raise(exception)
+        end
+
+        it do
+          expect { Screenplay.from_fountain("Hello world") }
+            .to raise_error("bad parse error")
+        end
+      end
+
+      context "when it fails to transform the input" do
+        before do
+          transform = instance_double(FountainTransform)
+          expect(FountainTransform).to receive(:new).and_return(transform)
+          expect(transform).to receive(:apply).and_return(double)
+        end
+
+        it do
+          expect { Screenplay.from_fountain("Hello world") }
+            .to raise_error("bad transform error")
+        end
       end
     end
 

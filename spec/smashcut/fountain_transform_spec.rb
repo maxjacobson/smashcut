@@ -48,12 +48,26 @@ module Smashcut
 
       it "makes a screenplay" do
         expect(screenplay).to eq(
-          Screenplay.new([
-            Screenplay::SceneHeading.new("EXT. CARNIVAL - NIGHT"),
-            Screenplay::Action.new([
-              Screenplay::UnemphasizedPhrase.new(
-                "MAX walks between the games.")]),
-            Screenplay::Line.new("MAX", "Whoa")]))
+          Screenplay.new(
+            [Screenplay::SceneHeading.new("EXT. CARNIVAL - NIGHT"),
+             Screenplay::Action.new(
+               [Screenplay::UnemphasizedPhrase.new(
+                 "MAX walks between the games.")]),
+             Screenplay::Dialogue.new(
+               Screenplay::Character.new("MAX"),
+               [Screenplay::Line.new("Whoa")])]))
+      end
+    end
+
+    context "when the fountain text has some parenthetical dialogue" do
+      let(:fountain_text) { read_fountain "simple dialogue with parenthetical" }
+      it do
+        expect(screenplay).to eq Screenplay.new([
+          Screenplay::Dialogue.new(
+            Screenplay::Character.new("BUD"),
+            [Screenplay::LineWithParenthetical.new(
+              "(stoned)", "Whoa, show me that again...")])
+        ])
       end
     end
   end

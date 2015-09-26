@@ -82,9 +82,10 @@ module Smashcut
 
     rule(:dialogue) do
       character >>
-        line_break >>
-        (parenthetical >> line_break).maybe >>
-        line >>
+        (line_break >>
+          (parenthetical >>
+            line_break).maybe >>
+            line).repeat(1).as(:lines) >>
         line_break.maybe
     end
 

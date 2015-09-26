@@ -4,7 +4,10 @@ require "smashcut/fountain_transform"
 require "smashcut/screenplay/concerns/screenplay_component"
 require "smashcut/screenplay/scene_heading"
 require "smashcut/screenplay/action"
+require "smashcut/screenplay/dialogue"
+require "smashcut/screenplay/character"
 require "smashcut/screenplay/line"
+require "smashcut/screenplay/line_with_parenthetical"
 require "smashcut/screenplay/unemphasized_phrase"
 require "smashcut/screenplay/emphasized_phrase"
 
@@ -23,8 +26,16 @@ module Smashcut
     # TODO: add ::from_pdf
     # TODO: add ::from_fdx
     def self.from_fountain(fountain)
-      FountainTransform.new.apply(
-        FountainParser.new.parse(fountain))
+      transformer = FountainTransform.new
+      parser = FountainParser.new
+      tree = begin
+               parser.parse(fountain)
+             rescue Parslet::ParseFailed
+               raise "bad parse error"
+             end
+      screenplay = transformer.apply(tree)
+      fail "bad transform error" unless screenplay.is_a?(Screenplay)
+      screenplay
     end
 
     def to_pdf(path:)
@@ -42,6 +53,7 @@ module Smashcut
     end
 
     def ==(other)
+      return false unless elements.length == other.elements.length
       elements.zip(other.elements).all? do |a, b|
         a == b
       end
