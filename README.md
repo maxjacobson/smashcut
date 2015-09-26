@@ -2,28 +2,17 @@
 
 [![Build Status](https://travis-ci.org/maxjacobson/smashcut.svg?branch=master)](https://travis-ci.org/maxjacobson/smashcut)
 
-## Goals
+This project helps convert [Fountain](http://fountain.io/syntax)-formatted
+screenplays to PDF. It's a work in progress. The plan is to release it via
+[RubyGems](http://rubygems.org) (and maybe some package managers) when it's more
+useful.
 
-### parse screenplays
-
-* parse screenplays written in Fountain (<http://fountain.io/syntax>)
-* comply to the spec as much as possible
-* use parslet ([about][1], [slides][2]) as the parsing engine
-* have tons of [tests][3] to help guide the way
-
-[1]: http://kschiess.github.io/parslet/
-[2]: https://speakerdeck.com/promptworks/writing-dsls-with-parslet-nyc-dot-rb
-[3]: http://rspec.info/
-
-### generate useful output
-
-* generate HTML and PDF output
-* probably use [prawn][4] as the PDF generating library, because it allows very
-  fine control and doesn't require non-ruby dependencies
-* have tons of tests to help guide the way -- if prawn has tests for its PDFs,
-  smashcut can learn from them
-
-[4]: http://prawnpdf.org/
+smashcut uses [parslet](https://github.com/kschiess/parslet) to help parse the
+fountain input and transform it into a rich Screenplay object. That object can
+be used to produce a PDF (using [prawn](https://github.com/prawnpdf/prawn/) to
+produce the PDF). It can also be used to produce a Fountain document, and *in
+theory* could be taught to produce other formats like HTML or FDX. I'm not
+currently interested in implementing those, but can imagine it would be useful.
 
 ### Installation
 
@@ -34,6 +23,9 @@ you'd like to try it, you can follow these steps:
 * `cd smashcut`
 * `bundle install`
 * `rake install`
+
+At this point, the gem is installed on your system and you can require it from
+your ruby programs or from within irb.
 
 ### tests and style
 
