@@ -5,15 +5,15 @@ module Smashcut
     class LineWithParenthetical
       include ScreenplayComponent
 
-      attr_reader :parenthetical, :text
+      attr_reader :parenthetical, :phrases
 
-      def initialize(parenthetical, text)
+      def initialize(parenthetical, phrases)
         @parenthetical = parenthetical
-        @text = text
+        @phrases = phrases
       end
 
       def to_fountain
-        [parenthetical, text].join("\n")
+        ([parenthetical] + phrases.map(&:to_fountain)).join("\n")
       end
     end
   end

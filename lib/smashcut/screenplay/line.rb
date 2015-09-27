@@ -4,14 +4,14 @@ module Smashcut
     class Line
       include ScreenplayComponent
 
-      attr_reader :text
+      attr_reader :phrases
 
-      def initialize(text)
-        @text = text
+      def initialize(phrases)
+        @phrases = phrases
       end
 
       def to_fountain
-        text
+        phrases.map(&:to_fountain).join
       end
     end
   end

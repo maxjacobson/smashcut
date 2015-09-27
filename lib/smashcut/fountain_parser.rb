@@ -77,7 +77,7 @@ module Smashcut
     end
 
     rule(:line) do
-      anything_but("\n").as(:line)
+      (emphasized_phrase | plain_phrase).repeat(1).as(:line)
     end
 
     rule(:dialogue) do

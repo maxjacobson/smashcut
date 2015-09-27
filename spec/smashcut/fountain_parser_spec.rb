@@ -25,7 +25,8 @@ RSpec.describe Smashcut::FountainParser do
           .as(:screenplay => [
             { :scene_heading => "EXT. CARNIVAL - NIGHT" },
             { :action => [{ :plain => "MAX walks between the games." }] },
-            { :character => "MAX", :lines => [{ :line => "Whoa" }] }])
+            { :character => "MAX",
+              :lines => [{ :line => [{ :plain => "Whoa" }] }] }])
       end
     end
   end
@@ -96,7 +97,8 @@ RSpec.describe Smashcut::FountainParser do
           expect(rule).to parse(text)
             .as(:character => "BUD",
                 :lines => [{ :parenthetical => "(stoned)",
-                             :line => "Whoa, show me that again..." }])
+                             :line => [
+                               { :plain => "Whoa, show me that again..." }] }])
         end
       end
 
@@ -108,9 +110,10 @@ RSpec.describe Smashcut::FountainParser do
             .as(:character => "STEVE",
                 :lines => [
                   { :parenthetical => "(wanly)",
-                    :line => "Everything is going dark..." },
+                    :line => [
+                      { :plain => "Everything is going dark..." }] },
                   { :parenthetical => "(beat)",
-                    :line => "Someone turn the lights on..." }])
+                    :line => [{ :plain => "Someone turn the lights on..." }] }])
         end
       end
 
@@ -120,7 +123,9 @@ RSpec.describe Smashcut::FountainParser do
         it "can parse simple dialogue" do
           expect(rule).to parse(text)
             .as(:character => "MAX",
-                :lines => [{ :line => "What time is your train?" }])
+                :lines => [
+                  { :line => [
+                    { :plain => "What time is your train?" }] }])
         end
       end
     end

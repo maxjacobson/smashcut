@@ -55,7 +55,8 @@ module Smashcut
                  "MAX walks between the games.")]),
              Screenplay::Dialogue.new(
                Screenplay::Character.new("MAX"),
-               [Screenplay::Line.new("Whoa")])]))
+               [Screenplay::Line.new([
+                 Screenplay::UnemphasizedPhrase.new("Whoa")])])]))
       end
     end
 
@@ -66,7 +67,9 @@ module Smashcut
           Screenplay::Dialogue.new(
             Screenplay::Character.new("BUD"),
             [Screenplay::LineWithParenthetical.new(
-              "(stoned)", "Whoa, show me that again...")])
+              "(stoned)",
+              [Screenplay::UnemphasizedPhrase.new(
+                "Whoa, show me that again...")])])
         ])
       end
     end

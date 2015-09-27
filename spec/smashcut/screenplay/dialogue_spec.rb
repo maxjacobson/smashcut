@@ -4,7 +4,11 @@ module Smashcut
     let(:character) { Screenplay::Character.new("AUGUST") }
 
     context "when there is one line" do
-      let(:lines) { [Screenplay::Line.new("Hello, I wrote Big Fish.")] }
+      let(:lines) do
+        [Screenplay::Line.new(
+          [Screenplay::UnemphasizedPhrase.new(
+            "Hello, I wrote Big Fish.")])]
+      end
 
       it do
         expect(dialogue.to_fountain).to eq "AUGUST\nHello, I wrote Big Fish."
@@ -15,7 +19,9 @@ module Smashcut
       let(:lines) do
         [
           Screenplay::LineWithParenthetical.new(
-            "(coolly)", "Hello, I wrote Charlie's Angels.")
+            "(coolly)",
+            [Screenplay::UnemphasizedPhrase.new(
+              "Hello, I wrote Charlie's Angels.")])
         ]
       end
 
@@ -27,9 +33,10 @@ module Smashcut
 
     context "when there are two lines, and the second has a parenthetical" do
       let(:lines) do
-        [Screenplay::Line.new("Hello"),
+        [Screenplay::Line.new([Screenplay::UnemphasizedPhrase.new("Hello")]),
          Screenplay::LineWithParenthetical.new(
-           "(politely)", "I wrote Big Fish.")]
+           "(politely)",
+           [Screenplay::UnemphasizedPhrase.new("I wrote Big Fish.")])]
       end
 
       it do

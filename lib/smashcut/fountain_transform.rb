@@ -25,16 +25,16 @@ module Smashcut
       Screenplay::EmphasizedPhrase.new(text.to_s, emphasis.to_s)
     end
 
-    rule(:line => simple(:line)) do
-      Screenplay::Line.new(line.to_s)
+    rule(:line => sequence(:phrases)) do
+      Screenplay::Line.new(phrases)
     end
 
     rule(:parenthetical => simple(:parenthetical)) do
       Screenplay::Parenthetical.new(parenthetical.to_s)
     end
 
-    rule(:parenthetical => simple(:parenthetical), :line => simple(:line)) do
-      Screenplay::LineWithParenthetical.new(parenthetical, line)
+    rule(:parenthetical => simple(:parenthetical), :line => sequence(:parts)) do
+      Screenplay::LineWithParenthetical.new(parenthetical, parts)
     end
 
     rule(:character => simple(:character), :lines => sequence(:lines)) do
