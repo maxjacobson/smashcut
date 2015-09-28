@@ -1,4 +1,5 @@
 require "parslet"
+require "parslet/convenience"
 require "smashcut/fountain_emphasis"
 
 module Smashcut
@@ -19,7 +20,7 @@ module Smashcut
 
     # these are all the different parts that make up a screenplay
     rule(:screenplay_element) do
-      scene_heading | dialogue | action
+      scene_heading | dialogue | transition | action
     end
 
     # simple rules
@@ -27,6 +28,7 @@ module Smashcut
     rule(:double_line_break) { line_break >> line_break }
     rule(:dot) { str(".") }
     rule(:space) { str(" ") }
+    rule(:spaces) { space.repeat(1) }
     rule(:hash) { str('#') }
     rule(:bang) { str("!") }
     rule(:spiral) { str("@") }
@@ -66,6 +68,20 @@ module Smashcut
 
     rule(:spiral_character) do
       spiral >> anything_but("\n").as(:character)
+    end
+
+    rule(:transition) do
+      ((non_to_upper_cased_word >>
+        spaces.maybe).repeat(1) >>
+        str("TO:")).as(:transition)
+    end
+
+    rule(:non_to_upper_cased_word) do
+      str("TO").absent? >> upper_cased_word
+    end
+
+    rule(:upper_cased_word) do
+      match["A-Z"].repeat(1)
     end
 
     rule(:no_spiral_character) do

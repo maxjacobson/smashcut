@@ -29,6 +29,24 @@ RSpec.describe Smashcut::FountainParser do
               :lines => [{ :line => [{ :plain => "Whoa" }] }] }])
       end
     end
+
+    context "when the screenplay has multiple scenes, with transitions" do
+      let(:text) { read_fountain "two scenes with a transition" }
+      it do
+        expect(parser).to parse(text)
+          .as(:screenplay => [
+            { :scene_heading => "EXT. PARK - NIGHT" },
+            { :action => [{
+              :plain => "Max bicycles around the park. What is he running from?"
+            }] },
+            { :transition => "FADE TO:" },
+            { :scene_heading => "INT. A CARDBOARD BOX - NIGHT" },
+            { :action => [{
+              :plain => "Max shrinks down real small."
+            }] }
+          ])
+      end
+    end
   end
 
   describe "individual rules" do
@@ -85,6 +103,7 @@ RSpec.describe Smashcut::FountainParser do
       end
     end
 
+    # TODO: test that it parses properly with emphasized text
     describe "dialogue" do
       let(:rule) { Smashcut::FountainParser.new.dialogue }
 
@@ -222,6 +241,7 @@ RSpec.describe Smashcut::FountainParser do
       end
     end
 
+    # TODO: transform these
     describe "scene_number" do
       let(:rule) { Smashcut::FountainParser.new.scene_number }
 
@@ -407,6 +427,39 @@ RSpec.describe Smashcut::FountainParser do
               { :emphasized_text => "HOLY SHIT", :emphasis => "_" },
               { :plain => " " },
               { :emphasized_text => "a puppy!", :emphasis => "*" }])
+        end
+      end
+    end
+
+    describe "transition" do
+      let(:rule) { Smashcut::FountainParser.new.transition }
+
+      context "when the text is all caps and ends in TO:" do
+        let(:text) { "FADE TO:" }
+
+        it do
+          expect(rule).to parse(text).as(:transition => "FADE TO:")
+        end
+      end
+
+      context "when the text isn't capitalized" do
+        let(:text) { "fade to:" }
+        it do
+          expect(rule).to_not parse(text)
+        end
+      end
+
+      context "when the text is some random uppercased word followed by TO:" do
+        let(:text) { "LOL TO:" }
+        it do
+          expect(rule).to parse(text).as(:transition => "LOL TO:")
+        end
+      end
+
+      context "when the text is a few uppercased words with TO:" do
+        let(:text) { "LOL WOW TO:" }
+        it do
+          expect(rule).to parse(text).as(:transition => "LOL WOW TO:")
         end
       end
     end

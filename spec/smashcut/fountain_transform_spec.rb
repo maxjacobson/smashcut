@@ -3,6 +3,17 @@ module Smashcut
     let(:parser) { FountainParser.new }
     let(:transform) { described_class.new }
     let(:screenplay) { transform.apply(parser.parse(fountain_text)) }
+
+    # it can parse all of the samples
+    Dir.glob("./spec/support/screenplays/*.fountain").each do |file|
+      context "when the text is #{file}" do
+        let(:fountain_text) { File.read(file) }
+        it do
+          expect(screenplay).to be_a Screenplay
+        end
+      end
+    end
+
     context "when the fountain text is some action" do
       let(:fountain_text) { "Max walks home." }
 
@@ -70,6 +81,24 @@ module Smashcut
               "(stoned)",
               [Screenplay::UnemphasizedPhrase.new(
                 "Whoa, show me that again...")])])
+        ])
+      end
+    end
+
+    context "when the fountain text contains a transition" do
+      let(:fountain_text) { read_fountain "two scenes with a transition" }
+      it do
+        expect(screenplay).to eq Screenplay.new([
+          Screenplay::SceneHeading.new("EXT. PARK - NIGHT"),
+          Screenplay::Action.new([
+            Screenplay::UnemphasizedPhrase.new(
+              "Max bicycles around the park. What is he running from?")
+          ]),
+          Screenplay::Transition.new("FADE TO:"),
+          Screenplay::SceneHeading.new("INT. A CARDBOARD BOX - NIGHT"),
+          Screenplay::Action.new([
+            Screenplay::UnemphasizedPhrase.new("Max shrinks down real small.")
+          ])
         ])
       end
     end

@@ -40,5 +40,9 @@ module Smashcut
     rule(:character => simple(:character), :lines => sequence(:lines)) do
       Screenplay::Dialogue.new(Screenplay::Character.new(character.to_s), lines)
     end
+
+    rule(:transition => simple(:transition)) do
+      Screenplay::Transition.new(transition.to_s)
+    end
   end
 end
