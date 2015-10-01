@@ -20,7 +20,7 @@ module Smashcut
 
     # these are all the different parts that make up a screenplay
     rule(:screenplay_element) do
-      scene_heading | dialogue | transition | action
+      scene_heading | dialogue | transition | centered_text | action
     end
 
     # simple rules
@@ -113,6 +113,12 @@ module Smashcut
 
     rule(:action) do
       (emphasized_phrase | plain_phrase).repeat(1).as(:action)
+    end
+
+    rule(:centered_text) do
+      (str(">") >>
+        anything_but("<", "\n").as(:centered) >>
+        str("<"))
     end
 
     rule(:plain_phrase) do

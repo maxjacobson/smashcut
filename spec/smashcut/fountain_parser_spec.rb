@@ -43,7 +43,8 @@ RSpec.describe Smashcut::FountainParser do
             { :scene_heading => "INT. A CARDBOARD BOX - NIGHT" },
             { :action => [{
               :plain => "Max shrinks down real small."
-            }] }
+            }] },
+            { :centered => " LOL THE END " }
           ])
       end
     end
@@ -460,6 +461,16 @@ RSpec.describe Smashcut::FountainParser do
         let(:text) { "LOL WOW TO:" }
         it do
           expect(rule).to parse(text).as(:transition => "LOL WOW TO:")
+        end
+      end
+    end
+
+    describe "centered text" do
+      let(:rule) { Smashcut::FountainParser.new.centered_text }
+      context "when the text is centered" do
+        let(:text) { "> THE END <" }
+        it do
+          expect(rule).to parse(text).as(:centered => " THE END ")
         end
       end
     end

@@ -44,5 +44,9 @@ module Smashcut
     rule(:transition => simple(:transition)) do
       Screenplay::Transition.new(transition.to_s)
     end
+
+    rule(:centered => simple(:text)) do
+      Screenplay::Centered.new(text.to_s.strip)
+    end
   end
 end

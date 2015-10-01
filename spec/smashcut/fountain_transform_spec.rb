@@ -98,7 +98,8 @@ module Smashcut
           Screenplay::SceneHeading.new("INT. A CARDBOARD BOX - NIGHT"),
           Screenplay::Action.new([
             Screenplay::UnemphasizedPhrase.new("Max shrinks down real small.")
-          ])
+          ]),
+          Screenplay::Centered.new("LOL THE END")
         ])
       end
     end
