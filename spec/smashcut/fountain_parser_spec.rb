@@ -44,7 +44,10 @@ RSpec.describe Smashcut::FountainParser do
             { :action => [{
               :plain => "Max shrinks down real small."
             }] },
-            { :centered => " LOL THE END " }
+            { :centered => [
+              { :plain => " LOL " },
+              { :emphasized_text => "THE END", :emphasis => "**"},
+              { :plain => " " }] }
           ])
       end
     end
@@ -467,10 +470,20 @@ RSpec.describe Smashcut::FountainParser do
 
     describe "centered text" do
       let(:rule) { Smashcut::FountainParser.new.centered_text }
-      context "when the text is centered" do
+      context "when the text is centered and plain" do
         let(:text) { "> THE END <" }
         it do
-          expect(rule).to parse(text).as(:centered => " THE END ")
+          expect(rule).to parse(text).as(:centered => [{ :plain => " THE END " }])
+        end
+      end
+      context "when the text is centered and contains emphasis" do
+        let(:text) { "> A *shiny* penny <" }
+        it 'omg', focus: true do
+          expect(rule).to parse(text)
+            .as(:centered => [
+              { :plain => " A " },
+              { :emphasized_text => "shiny", emphasis: "*" },
+              { :plain => " penny " }])
         end
       end
     end

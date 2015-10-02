@@ -117,24 +117,14 @@ module Smashcut
 
     rule(:centered_text) do
       (str(">") >>
-        anything_but("<", "\n").as(:centered) >>
-        str("<"))
+       (emphasized_phrase |
+        idk_yet(consume_until: "<\n").repeat(1)
+       .as(:centered)) >>
+       str("<"))
     end
 
     rule(:plain_phrase) do
-      dynamic do |source, _context|
-        if (index = source.match(stuff_then_emphasis))
-          # saw an emphasis ahead, so just gonna eat up until that
-          current_bytepos = source.bytepos
-          plain_segment = source.consume(index).to_s
-          source.bytepos = current_bytepos
-          str(plain_segment).as(:plain)
-        else
-          # did not see a coming emphasis, so just gonna gobble up the rest of
-          # the line
-          anything_but("\n").as(:plain)
-        end
-      end
+      idk_yet
     end
 
     # whichever chars were used at the start, the reverse should end it
@@ -165,6 +155,22 @@ module Smashcut
       @emphasis_delimiter = FountainEmphasis.instance.longlist
                             .map { |delimeter| str(delimeter) }
                             .reduce(:|)
+    end
+
+    def idk_yet(consume_until: "\n")
+      dynamic do |source, _context|
+        if (index = source.match(stuff_then_emphasis))
+          # saw an emphasis ahead, so just gonna eat up until that
+          current_bytepos = source.bytepos
+          plain_segment = source.consume(index).to_s
+          source.bytepos = current_bytepos
+          str(plain_segment).as(:plain)
+        else
+          # did not see a coming emphasis, so just gonna gobble up the rest of
+          # the line
+          anything_but(consume_until).as(:plain)
+        end
+      end
     end
   end
 end
