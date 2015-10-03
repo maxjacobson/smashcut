@@ -13,6 +13,10 @@ module Smashcut
       def to_fountain
         elements.map(&:to_fountain).join
       end
+
+      def add_to(document)
+        document.text to_fountain
+      end
     end
   end
 end

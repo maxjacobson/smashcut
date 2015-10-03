@@ -9,30 +9,15 @@ module Smashcut
     def initialize(screenplay)
       fail ArgumentError unless screenplay.is_a?(Screenplay)
       @screenplay = screenplay
-      go_for_it
+      font("Courier") do
+        screenplay.elements.each do |element|
+          element.add_to(self)
+        end
+      end
     end
 
     private
 
     attr_reader :screenplay
-
-    def go_for_it
-      font("Courier") do
-        screenplay.elements.each do |element|
-          coerce(element)
-        end
-      end
-    end
-
-    def coerce(element)
-      if element.is_a?(Screenplay::Dialogue)
-        text element.to_fountain, :align => :center
-      elsif element.is_a?(Screenplay::Centered)
-        text element.text, :align => :center
-      else
-        text element.to_fountain
-        move_down 5
-      end
-    end
   end
 end

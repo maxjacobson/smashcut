@@ -14,6 +14,10 @@ module Smashcut
       def to_fountain
         ([character] + lines).map(&:to_fountain).join("\n")
       end
+
+      def add_to(document)
+        document.text(to_fountain, :align => :center)
+      end
     end
   end
 end

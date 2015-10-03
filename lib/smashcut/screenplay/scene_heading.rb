@@ -14,6 +14,10 @@ module Smashcut
       def to_fountain
         text
       end
+
+      def add_to(document)
+        document.text(text)
+      end
     end
   end
 end
