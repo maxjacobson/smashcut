@@ -27,5 +27,20 @@ module Smashcut
         expect(pdf_path).to have_pdf("tarrytown")
       end
     end
+
+    context "when the fountain has centered text" do
+      before { clean_up_pdfs }
+      let(:fountain_text) do
+        read_fountain "two scenes with a transition"
+      end
+
+      let(:path) { pdf_path("intent") }
+
+      it "produces a pdf" do
+        expect(pdf_path).to_not have_pdf("intent")
+        pdf_generator.save_as(path)
+        expect(pdf_path).to have_pdf("intent")
+      end
+    end
   end
 end

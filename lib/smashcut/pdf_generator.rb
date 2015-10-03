@@ -27,6 +27,8 @@ module Smashcut
     def coerce(element)
       if element.is_a?(Screenplay::Dialogue)
         text element.to_fountain, :align => :center
+      elsif element.is_a?(Screenplay::Centered)
+        text element.text, :align => :center
       else
         text element.to_fountain
         move_down 5
