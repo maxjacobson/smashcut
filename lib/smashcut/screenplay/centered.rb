@@ -16,7 +16,7 @@ module Smashcut
       end
 
       def add_to(document)
-        document.text(text, :aling => :center)
+        document.text(text, :align => :center)
       end
     end
   end
