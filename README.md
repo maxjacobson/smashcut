@@ -40,6 +40,23 @@ up a server you can visit in your browser at <http://localhost:8808>. When
 adding inline documentation (comments above classes, methods, etc) please use
 the yard syntax.
 
+### release process
+
+(Haven't actually done this yet, but) to release a new version of the gem, you
+will need to:
+
+* decide what is the new version number
+* edit the version.rb file with a new version number
+* edit the CHANGELOG.md file to describe the new release, and make sure there's
+  an "unreleased" section at the top for future unreleased changes.
+* The commit these changes
+* run `bundle exec rake release`, which will generate a git tag, push the tag to
+  GitHub, create a new `.gem` file under the `pkg` folder, and release that pkg
+  to rubygems.org
+* create a new GitHub release
+  (<https://github.com/maxjacobson/smashcut/releases>) describing the changes in
+  the new version
+
 ### Contributing
 
 Bug reports and pull requests are welcome on GitHub at
