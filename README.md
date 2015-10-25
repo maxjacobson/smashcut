@@ -4,8 +4,7 @@
 
 This project helps convert [Fountain](http://fountain.io/syntax)-formatted
 screenplays to PDF. It's a work in progress. The plan is to release it via
-[RubyGems](http://rubygems.org) (and maybe some package managers) when it's more
-useful.
+[RubyGems](http://rubygems.org) (and maybe homebrew???) when it's more useful.
 
 smashcut uses [parslet](https://github.com/kschiess/parslet) to help parse the
 fountain input and transform it into a rich Screenplay object. That object can
