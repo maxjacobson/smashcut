@@ -15,6 +15,8 @@ require "smashcut/screenplay/emphasized_phrase"
 
 require "smashcut/pdf_generator"
 
+require "required_arg"
+
 module Smashcut
   # This is the object that represents a screenplay, which can offer some info
   # about the screenplay and convert it to various formats (eventually)
@@ -40,7 +42,7 @@ module Smashcut
       screenplay
     end
 
-    def to_pdf(path:)
+    def to_pdf(path: RequiredArg.new(:path))
       PdfGenerator.new(self).save_as(path)
     end
 

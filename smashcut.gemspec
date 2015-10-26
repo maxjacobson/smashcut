@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "parslet", "~> 1.7"
   spec.add_dependency "prawn", "~> 2.0"
+  spec.add_dependency "required_arg", "~> 1.0"
 
-  spec.required_ruby_version = ">= 2.2.0"
+  spec.required_ruby_version = ">= 2.0.0"
 end

@@ -78,6 +78,13 @@ module Smashcut
           expect(pdf_generator).to receive(:save_as).with(path)
           screenplay.to_pdf(:path => path)
         end
+
+        context "when you forget to provide a path" do
+          it do
+            expect { screenplay.to_pdf }.to raise_error(
+              ArgumentError, /missing keyword/)
+          end
+        end
       end
     end
   end
