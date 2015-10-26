@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+# TODO: test this properly
+require "smashcut"
+
+filename = ARGV[0]
+output_filename = ARGV[1]
+
+unless filename && output_filename
+  puts "Usage: `smashcut file.fountain file.pdf`"
+  puts "(Creates file.pdf based on file.fountain)"
+  exit 1
+end
+
+unless File.exist?(filename)
+  puts "Missing file: #{filename}"
+  exit 1
+end
+
+text = File.read(filename)
+Smashcut::Screenplay.from_fountain(text).to_pdf(:path => output_filename)
+puts "Created #{output_filename}"
