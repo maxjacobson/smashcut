@@ -4,13 +4,14 @@
 require "smashcut"
 
 filename = ARGV[0]
-output_filename = ARGV[1]
 
-unless filename && output_filename
-  puts "Usage: `smashcut file.fountain file.pdf`"
+unless filename
+  puts "Usage: `smashcut file.fountain [file.pdf]`"
   puts "(Creates file.pdf based on file.fountain)"
   exit 1
 end
+
+output_filename = ARGV[1] || (filename + ".pdf").gsub(".fountain", "")
 
 unless File.exist?(filename)
   puts "Missing file: #{filename}"
