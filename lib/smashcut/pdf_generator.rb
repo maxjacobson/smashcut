@@ -7,7 +7,7 @@ module Smashcut
     include Prawn::View
 
     def initialize(screenplay)
-      fail ArgumentError unless screenplay.is_a?(Screenplay)
+      raise ArgumentError unless screenplay.is_a?(Screenplay)
       @screenplay = screenplay
       font("Courier") do
         screenplay.elements.each do |element|

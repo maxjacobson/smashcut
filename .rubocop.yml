@@ -11,5 +11,8 @@ Style/HashSyntax:
 Style/StringLiterals:
   EnforcedStyle: 'double_quotes'
 
+Style/SignalException:
+  EnforcedStyle: 'only_raise'
+
 Metrics/ClassLength:
   Enabled: false

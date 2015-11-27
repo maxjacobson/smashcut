@@ -38,7 +38,7 @@ module Smashcut
                raise "bad parse error"
              end
       screenplay = transformer.apply(tree)
-      fail "bad transform error" unless screenplay.is_a?(Screenplay)
+      raise "bad transform error" unless screenplay.is_a?(Screenplay)
       screenplay
     end
 
