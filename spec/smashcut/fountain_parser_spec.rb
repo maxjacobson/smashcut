@@ -48,6 +48,22 @@ RSpec.describe Smashcut::FountainParser do
           ])
       end
     end
+
+    context "when the screenplay has a title page" do
+      let(:text) { read_fountain "screenplay with title page" }
+      xit do
+        expect(parser).to parse(text)
+          .as(:screenplay => [
+            { :title_page => {
+              :Title => "Hardscrabble Road",
+              :Credit => "Written by",
+              :Author => "Max Jacobson"
+            } },
+            { :scene_heading => "EXT. A DUSTY ROAD - NIGHT" },
+            { :action => [{ :plain => "A garbage man arrives on foot" }] }
+          ])
+      end
+    end
   end
 
   describe "individual rules" do
@@ -486,6 +502,19 @@ RSpec.describe Smashcut::FountainParser do
         let(:text) { "> THE END <" }
         it do
           expect(rule).to parse(text).as(:centered => " THE END ")
+        end
+      end
+    end
+
+    describe "title page" do
+      let(:rule) { described_class.new.title_page }
+      context "when there is a title" do
+        let(:text) { "Title: Hardscrabble" }
+        xit do
+          expect(rule).to parse(text).as(
+            :title_page => {
+              :title => "Hardscrabble"
+            })
         end
       end
     end

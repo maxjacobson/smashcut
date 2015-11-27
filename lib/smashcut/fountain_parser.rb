@@ -36,10 +36,17 @@ module Smashcut
     rule(:closing_parenthesis) { str(")") }
     rule(:star) { str("*") }
 
+    # TODO: should this be case-insensitive?
+    rule(:title_page_key) do
+      str("Title")
+    end
+    rule(:title_page_key_value_pair) { title_page_key >> colon >> words }
+    rule(:title_page) { (title_page_key_value_pair >> line_break).repeat(1) }
+
     # TODO: explain what is happening here
     rule(:scene_openers) do
       %w( i/e int/ext int./ext ext int est ).map do |opener|
-        opener.split("").map do |char|
+        opener.chars.map do |char|
           match["#{char.downcase}#{char.upcase}"]
         end.reduce(:>>)
       end.reduce(:|)
