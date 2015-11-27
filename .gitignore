@@ -19,6 +19,7 @@ tmp
 *.so
 *.o
 *.a
+*~
 mkmf.log
 rspec.results
 spec/support/generated_pdfs/*.pdf
