@@ -20,4 +20,7 @@ RSpec.configure do |config|
   # allow to focus on one thing at a time if you like, by adding the focus tag
   config.filter_run_including :focus => true
   config.run_all_when_everything_filtered = true
+
+  # I only really want this when using guard on my laptop. Maybe it's a bad idea
+  config.filter_gems_from_backtrace "rspec-core", "parslet"
 end

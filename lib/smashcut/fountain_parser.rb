@@ -35,13 +35,26 @@ module Smashcut
     rule(:opening_parenthesis) { str("(") }
     rule(:closing_parenthesis) { str(")") }
     rule(:star) { str("*") }
+    rule(:colon) { str(":") }
+    # TODO: rename me
+    rule(:words) { anything_but("\n") }
 
     # TODO: should this be case-insensitive?
     rule(:title_page_key) do
       str("Title")
     end
-    rule(:title_page_key_value_pair) { title_page_key >> colon >> words }
-    rule(:title_page) { (title_page_key_value_pair >> line_break).repeat(1) }
+    rule(:title_page_key_value_pair) do
+      title_page_key >>
+        colon >>
+        spaces.maybe >>
+        words.as(:title)
+    end
+    rule(:title_page) do
+      (
+        title_page_key_value_pair >>
+        line_break
+      ).repeat(1).as(:title_page)
+    end
 
     # TODO: explain what is happening here
     rule(:scene_openers) do

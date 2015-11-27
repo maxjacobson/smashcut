@@ -506,15 +506,16 @@ RSpec.describe Smashcut::FountainParser do
       end
     end
 
+    # TODO: much more tests needed
     describe "title page" do
       let(:rule) { described_class.new.title_page }
       context "when there is a title" do
-        let(:text) { "Title: Hardscrabble" }
-        xit do
-          expect(rule).to parse(text).as(
-            :title_page => {
+        let(:text) { "Title: Hardscrabble\n" }
+        it do
+          expect(rule).to parse(text, :trace => true).as(
+            :title_page => [{
               :title => "Hardscrabble"
-            })
+            }])
         end
       end
     end
