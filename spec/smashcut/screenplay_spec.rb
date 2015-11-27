@@ -5,9 +5,9 @@ module Smashcut
     describe "::from_fountain" do
       context "when it succeeds" do
         it "parses and transforms the fountain input" do
-          screenplay = Screenplay.from_fountain("Hello world")
+          screenplay = described_class.from_fountain("Hello world")
           expect(screenplay).to eq(
-            Screenplay.new([
+            described_class.new([
               Screenplay::Action.new([
                 Screenplay::UnemphasizedPhrase.new("Hello world")])]))
         end
@@ -22,7 +22,7 @@ module Smashcut
         end
 
         it do
-          expect { Screenplay.from_fountain("Hello world") }
+          expect { described_class.from_fountain("Hello world") }
             .to raise_error("bad parse error")
         end
       end
@@ -35,7 +35,7 @@ module Smashcut
         end
 
         it do
-          expect { Screenplay.from_fountain("Hello world") }
+          expect { described_class.from_fountain("Hello world") }
             .to raise_error("bad transform error")
         end
       end

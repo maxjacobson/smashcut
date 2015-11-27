@@ -8,7 +8,7 @@ RSpec.describe Smashcut::FountainParser do
     context "when the screenplay is a scene heading and some action" do
       let(:text) { read_fountain "scene heading and action" }
 
-      it "should parse the screenplay" do
+      it "parses the screenplay" do
         expect(parser).to parse(text)
           .as(:screenplay => [
             { :scene_heading => "EXT. PARK - DAY" },
@@ -20,7 +20,7 @@ RSpec.describe Smashcut::FountainParser do
     context "when the screenplay is a scene heading, action, and dialogue" do
       let(:text) { read_fountain "scene heading action and dialogue" }
 
-      it "should parse the screenplay" do
+      it "parses the screenplay" do
         expect(parser).to parse(text)
           .as(:screenplay => [
             { :scene_heading => "EXT. CARNIVAL - NIGHT" },
@@ -52,7 +52,7 @@ RSpec.describe Smashcut::FountainParser do
 
   describe "individual rules" do
     describe "anything_but_scene_number" do
-      let(:rule) { Smashcut::FountainParser.new.anything_but_scene_number }
+      let(:rule) { described_class.new.anything_but_scene_number }
 
       it "can parse a simple string" do
         expect(rule).to parse("Hello").as("Hello")
@@ -64,7 +64,7 @@ RSpec.describe Smashcut::FountainParser do
     end
 
     describe "character" do
-      let(:rule) { Smashcut::FountainParser.new.character }
+      let(:rule) { described_class.new.character }
 
       context "with leading spiral (@) and all caps" do
         it "strips out the spiral" do
@@ -106,7 +106,7 @@ RSpec.describe Smashcut::FountainParser do
 
     # TODO: test that it parses properly with emphasized text
     describe "dialogue" do
-      let(:rule) { Smashcut::FountainParser.new.dialogue }
+      let(:rule) { described_class.new.dialogue }
 
       context "when there is one parenthetical" do
         let(:text) do
@@ -152,25 +152,25 @@ RSpec.describe Smashcut::FountainParser do
 
     # TODO: snip out the parens from the parsed value
     describe "parenthetical" do
-      let(:rule) { Smashcut::FountainParser.new.parenthetical }
+      let(:rule) { described_class.new.parenthetical }
 
       describe "happy path" do
         let(:text) { "(quiet)" }
 
-        it "should parse parentheticals" do
+        it "parses parentheticals" do
           expect(rule).to parse(text).as(:parenthetical => text)
         end
       end
 
       describe "sad path" do
-        it "should not parse non parentheticals" do
+        it "does not parse non-parentheticals" do
           expect(rule).not_to parse "Hello"
         end
       end
     end
 
     describe "scene_heading" do
-      let(:rule) { Smashcut::FountainParser.new.scene_heading }
+      let(:rule) { described_class.new.scene_heading }
 
       describe "leading dot scene headings" do
         let(:text) { ".IN THE WOODS AT NIGHT" }
@@ -182,36 +182,51 @@ RSpec.describe Smashcut::FountainParser do
       end
 
       describe "acceptable scene heading openers" do
-        # TODO: something more clever than this
-        after(:each) do
-          expect(rule).to parse @scene_heading
-          expect(rule).to parse(@scene_heading)
-            .as(:scene_heading => @scene_heading)
+        shared_examples "valid scene heading" do
+          it "parses the valid scene heading" do
+            expect(rule).to parse(scene_heading)
+              .as(:scene_heading => scene_heading)
+          end
         end
 
-        it "can parse INT." do
-          @scene_heading = "INT. APARTMENT - NIGHT"
+        context "INT." do
+          let(:scene_heading) { "INT. APARTMENT - NIGHT" }
+          it_behaves_like "valid scene heading"
         end
-        it "can parse int." do
-          @scene_heading = "int. apartment - day"
+
+        context "int." do
+          let(:scene_heading) { "int. apartment - day" }
+          it_behaves_like "valid scene heading"
         end
-        it "can parse EXT." do
-          @scene_heading = "EXT. PARK - NIGHT"
+
+        context "EXT." do
+          let(:scene_heading) { "EXT. PARK - NIGHT" }
+          it_behaves_like "valid scene heading"
         end
-        it "can parse ext." do
-          @scene_heading = "ext. space - forever"
+
+        context "ext." do
+          let(:scene_heading) { "ext. space - forever" }
+          it_behaves_like "valid scene heading"
         end
-        it "can parse INT without a dot" do
-          @scene_heading = "INT MALL - NIGHT"
+
+        context "INT without dot" do
+          let(:scene_heading) { "INT MALL - NIGHT" }
+          it_behaves_like "valid scene heading"
         end
-        it "can parse I/E." do
-          @scene_heading = "I/E. CONVERTIBLE - DAY"
+
+        context "I/E." do
+          let(:scene_heading) { "I/E. CONVERTIBLE - DAY" }
+          it_behaves_like "valid scene heading"
         end
-        it "can parse int/ext" do
-          @scene_heading = "int/ext convertible - day"
+
+        context "int/ext" do
+          let(:scene_heading) { "int/ext convertible - day" }
+          it_behaves_like "valid scene heading"
         end
-        it "can parse int./ext" do
-          @scene_heading = "INT./EXT. TRUCK - DAY"
+
+        context "INT./EXT." do
+          let(:scene_heading) { "INT./EXT. TRUCK - DAY" }
+          it_behaves_like "valid scene heading"
         end
       end
 
@@ -236,7 +251,7 @@ RSpec.describe Smashcut::FountainParser do
           expect(rule).not_to parse "The end."
         end
 
-        it "should allow for characters named Esteban" do
+        it "allows for characters named Esteban" do
           expect(rule).not_to parse "Esteban walked down the sidewalk"
         end
       end
@@ -244,7 +259,7 @@ RSpec.describe Smashcut::FountainParser do
 
     # TODO: transform these
     describe "scene_number" do
-      let(:rule) { Smashcut::FountainParser.new.scene_number }
+      let(:rule) { described_class.new.scene_number }
 
       context "when there is a leading space" do
         it do
@@ -284,7 +299,7 @@ RSpec.describe Smashcut::FountainParser do
     end
 
     describe "plain_phrase" do
-      let(:rule) { Smashcut::FountainParser.new.plain_phrase }
+      let(:rule) { described_class.new.plain_phrase }
 
       context "when the text is a plain word" do
         it do
@@ -320,7 +335,7 @@ RSpec.describe Smashcut::FountainParser do
     end
 
     describe "emphasized_phrase" do
-      let(:rule) { Smashcut::FountainParser.new.emphasized_phrase }
+      let(:rule) { described_class.new.emphasized_phrase }
 
       context "when the text is surrounded by stars" do
         let(:text) { "*omg!*" }
@@ -372,7 +387,7 @@ RSpec.describe Smashcut::FountainParser do
     end
 
     describe "action" do
-      let(:rule) { Smashcut::FountainParser.new.action }
+      let(:rule) { described_class.new.action }
 
       context "when the text is a simple sentence" do
         let(:text) { "He walked home." }
@@ -433,7 +448,7 @@ RSpec.describe Smashcut::FountainParser do
     end
 
     describe "transition" do
-      let(:rule) { Smashcut::FountainParser.new.transition }
+      let(:rule) { described_class.new.transition }
 
       context "when the text is all caps and ends in TO:" do
         let(:text) { "FADE TO:" }
@@ -466,7 +481,7 @@ RSpec.describe Smashcut::FountainParser do
     end
 
     describe "centered text" do
-      let(:rule) { Smashcut::FountainParser.new.centered_text }
+      let(:rule) { described_class.new.centered_text }
       context "when the text is centered" do
         let(:text) { "> THE END <" }
         it do
