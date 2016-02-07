@@ -1,7 +1,6 @@
 module Smashcut
   RSpec.describe Screenplay do
-    # TODO: this might be the public interface here, so this may be the place
-    # to rescue parslet/prawn errors and reraise.. probs
+    # TODO(#shipit): decide if this is main public interface
     describe "::from_fountain" do
       context "when it succeeds" do
         it "parses and transforms the fountain input" do

@@ -27,8 +27,8 @@ module Smashcut
       @elements = elements
     end
 
-    # TODO: add ::from_pdf
-    # TODO: add ::from_fdx
+    # TODO(#oneday): add ::from_pdf
+    # TODO(#oneday): add ::from_fdx
     def self.from_fountain(fountain)
       transformer = FountainTransform.new
       parser = FountainParser.new
@@ -51,7 +51,7 @@ module Smashcut
       elements.count { |el| el.is_a?(SceneHeading) }
     end
 
-    # TODO: test me and improve
+    # TODO(#shipit): test me and improve
     def to_fountain
       elements.map(&:to_fountain).join("\n\n")
     end

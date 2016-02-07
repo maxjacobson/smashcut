@@ -1,6 +1,8 @@
 require:
   - 'rubocop-rspec'
 
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   DisplayCopNames: true
 
@@ -18,4 +20,8 @@ Style/SignalException:
   EnforcedStyle: 'only_raise'
 
 Metrics/ClassLength:
+  Enabled: false
+
+# FIXME: this seems to be broken, maybe it will be fixed later:
+RSpec/FilePath:
   Enabled: false

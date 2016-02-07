@@ -104,7 +104,7 @@ RSpec.describe Smashcut::FountainParser do
       end
     end
 
-    # TODO: test that it parses properly with emphasized text
+    # TODO(#shipit): test that it parses properly with emphasized text
     describe "dialogue" do
       let(:rule) { described_class.new.dialogue }
 
@@ -150,7 +150,7 @@ RSpec.describe Smashcut::FountainParser do
       end
     end
 
-    # TODO: snip out the parens from the parsed value
+    # TODO(#shipit): snip out the parens from the parsed value
     describe "parenthetical" do
       let(:rule) { described_class.new.parenthetical }
 
@@ -239,7 +239,7 @@ RSpec.describe Smashcut::FountainParser do
         end
 
         it 'can parse scene numbers which aren\'t digits' do
-          # TODO: lose trailing space on scene heading
+          # TODO(#shipit): lose trailing space on scene heading
           expect(rule).to parse("INT. HIKING DOME - DAY #TWO#")
             .as(:scene_heading => "INT. HIKING DOME - DAY ",
                 :scene_number => "TWO")
@@ -257,7 +257,7 @@ RSpec.describe Smashcut::FountainParser do
       end
     end
 
-    # TODO: transform these
+    # TODO(#shipit): transform these
     describe "scene_number" do
       let(:rule) { described_class.new.scene_number }
 

@@ -1,6 +1,6 @@
 module Smashcut
   class Screenplay
-    # TODO: add some specs
+    # TODO(#shipit): add some specs
     # e.g.,
     # FADE TO:
     class Transition

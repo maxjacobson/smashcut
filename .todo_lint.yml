@@ -1,0 +1,8 @@
+Exclude Files:
+  - vendor/**
+
+Tags:
+  # things I probably won't ever do:
+  oneday: 2017-01-01
+  # things I'd like to do before sharing the gem
+  shipit: 2016-07-01

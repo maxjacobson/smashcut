@@ -22,7 +22,7 @@ module Smashcut
       end
     end
 
-    # TODO: implement specs for this one (it's indirectly tested elsewhere)
+    # TODO(#shipit): test this directly, not just indirectly
     describe "#=="
   end
 end

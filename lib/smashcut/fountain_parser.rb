@@ -11,7 +11,7 @@ module Smashcut
     root(:screenplay)
 
     # screenplay is a bunch of elements spaced out with 2 linebreaks
-    # TODO: maybe it should be 2-or-more linebreaks
+    # TODO(#shipit): maybe it should be 2-or-more linebreaks
     rule(:screenplay) do
       (screenplay_element >>
        line_break.maybe >>
@@ -36,7 +36,7 @@ module Smashcut
     rule(:closing_parenthesis) { str(")") }
     rule(:star) { str("*") }
 
-    # TODO: explain what is happening here
+    # TODO(#shipit): explain what is happening here
     rule(:scene_openers) do
       %w( i/e int/ext int./ext ext int est ).map do |opener|
         opener.split("").map do |char|
