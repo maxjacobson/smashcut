@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Smashcut
   RSpec.describe Screenplay::Action do
     let(:action) { described_class.new(phrases) }

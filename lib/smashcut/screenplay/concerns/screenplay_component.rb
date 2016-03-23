@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Smashcut
   class Screenplay
     # A class which includes this is going to be a simple value object which

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Some helpful rspec matchers from parslet
 require "parslet/rig/rspec"
 
@@ -11,9 +12,9 @@ RSpec.describe Smashcut::FountainParser do
       it "parses the screenplay" do
         expect(parser).to parse(text)
           .as(:screenplay => [
-            { :scene_heading => "EXT. PARK - DAY" },
-            { :action => [
-              { :plain => "A large extended family enjoys a picnic." }] }])
+                { :scene_heading => "EXT. PARK - DAY" },
+                { :action => [
+                  { :plain => "A large extended family enjoys a picnic." }] }])
       end
     end
 
@@ -23,29 +24,47 @@ RSpec.describe Smashcut::FountainParser do
       it "parses the screenplay" do
         expect(parser).to parse(text)
           .as(:screenplay => [
-            { :scene_heading => "EXT. CARNIVAL - NIGHT" },
-            { :action => [{ :plain => "MAX walks between the games." }] },
-            { :character => "MAX",
-              :lines => [{ :line => [{ :plain => "Whoa" }] }] }])
+                { :scene_heading => "EXT. CARNIVAL - NIGHT" },
+                { :action => [{ :plain => "MAX walks between the games." }] },
+                { :character => "MAX",
+                  :lines => [{ :line => [{ :plain => "Whoa" }] }] }])
       end
     end
 
     context "when the screenplay has multiple scenes, with transitions" do
       let(:text) { read_fountain "two scenes with a transition" }
       it do
-        expect(parser).to parse(text)
-          .as(:screenplay => [
-            { :scene_heading => "EXT. PARK - NIGHT" },
-            { :action => [{
-              :plain => "Max bicycles around the park. What is he running from?"
-            }] },
-            { :transition => "FADE TO:" },
-            { :scene_heading => "INT. A CARDBOARD BOX - NIGHT" },
-            { :action => [{
-              :plain => "Max shrinks down real small."
-            }] },
-            { :centered => " LOL THE END " }
-          ])
+        expect(parser).to parse(text).as(
+          :screenplay => [
+            {
+              :scene_heading => "EXT. PARK - NIGHT"
+            },
+            {
+              :action => [
+                {
+                  :plain => "Max bicycles around the park. " \
+                            "What is he running from?"
+                }
+              ]
+            },
+            {
+              :transition => "FADE TO:"
+            },
+            {
+              :scene_heading => "INT. A CARDBOARD BOX - NIGHT"
+            },
+            {
+              :action => [
+                {
+                  :plain => "Max shrinks down real small."
+                }
+              ]
+            },
+            {
+              :centered => " LOL THE END "
+            }
+          ]
+        )
       end
     end
   end
@@ -408,8 +427,8 @@ RSpec.describe Smashcut::FountainParser do
         it do
           expect(rule).to parse(text)
             .as(:action => [
-              { :emphasized_text => "HOLY SHIT", :emphasis => "*" },
-              { :plain => " there's a puppy." }])
+                  { :emphasized_text => "HOLY SHIT", :emphasis => "*" },
+                  { :plain => " there's a puppy." }])
         end
       end
 
@@ -418,8 +437,8 @@ RSpec.describe Smashcut::FountainParser do
         it do
           expect(rule).to parse(text)
             .as(:action => [
-              { :plain => "And then... " },
-              { :emphasized_text => "HOLY SHIT", :emphasis => "_" }])
+                  { :plain => "And then... " },
+                  { :emphasized_text => "HOLY SHIT", :emphasis => "_" }])
         end
       end
 
@@ -428,9 +447,9 @@ RSpec.describe Smashcut::FountainParser do
         it do
           expect(rule).to parse(text)
             .as(:action => [
-              { :plain => "And then... " },
-              { :emphasized_text => "HOLY SHIT", :emphasis => "_" },
-              { :plain => " a puppy!" }])
+                  { :plain => "And then... " },
+                  { :emphasized_text => "HOLY SHIT", :emphasis => "_" },
+                  { :plain => " a puppy!" }])
         end
       end
 
@@ -439,10 +458,10 @@ RSpec.describe Smashcut::FountainParser do
         it do
           expect(rule).to parse(text)
             .as(:action => [
-              { :plain => "And then... " },
-              { :emphasized_text => "HOLY SHIT", :emphasis => "_" },
-              { :plain => " " },
-              { :emphasized_text => "a puppy!", :emphasis => "*" }])
+                  { :plain => "And then... " },
+                  { :emphasized_text => "HOLY SHIT", :emphasis => "_" },
+                  { :plain => " " },
+                  { :emphasized_text => "a puppy!", :emphasis => "*" }])
         end
       end
     end

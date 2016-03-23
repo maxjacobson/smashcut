@@ -1,9 +1,13 @@
+# frozen_string_literal: true
 require "bundler/gem_tasks"
+require "yaml"
 
-require "rspec/core/rake_task"
-RSpec::Core::RakeTask.new(:spec)
+task :continuous_integration do
+  YAML.load(File.read("./.travis.yml")).fetch("script").shuffle.each do |cmd|
+    next if system cmd
+    puts "\nFailed: #{cmd.inspect}"
+    exit 1
+  end
+end
 
-require "rubocop/rake_task"
-RuboCop::RakeTask.new(:rubocop)
-
-task :default => [:spec, :rubocop]
+task :default => [:continuous_integration]

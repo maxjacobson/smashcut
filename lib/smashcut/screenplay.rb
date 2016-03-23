@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "smashcut/fountain_parser"
 require "smashcut/fountain_transform"
 
@@ -14,8 +15,6 @@ require "smashcut/screenplay/unemphasized_phrase"
 require "smashcut/screenplay/emphasized_phrase"
 
 require "smashcut/pdf_generator"
-
-require "required_arg"
 
 module Smashcut
   # This is the object that represents a screenplay, which can offer some info
@@ -42,7 +41,7 @@ module Smashcut
       screenplay
     end
 
-    def to_pdf(path: RequiredArg.new(:path))
+    def to_pdf(path:)
       PdfGenerator.new(self).save_as(path)
     end
 

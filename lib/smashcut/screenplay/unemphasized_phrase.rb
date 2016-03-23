@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Smashcut
   class Screenplay
     # Represents a bit of text which has no emphasis

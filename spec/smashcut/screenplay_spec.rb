@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Smashcut
   RSpec.describe Screenplay do
     # TODO(#shipit): decide if this is main public interface
@@ -6,9 +7,16 @@ module Smashcut
         it "parses and transforms the fountain input" do
           screenplay = described_class.from_fountain("Hello world")
           expect(screenplay).to eq(
-            described_class.new([
-              Screenplay::Action.new([
-                Screenplay::UnemphasizedPhrase.new("Hello world")])]))
+            described_class.new(
+              [
+                Screenplay::Action.new(
+                  [
+                    Screenplay::UnemphasizedPhrase.new("Hello world")
+                  ]
+                )
+              ]
+            )
+          )
         end
       end
 
@@ -63,8 +71,13 @@ module Smashcut
     describe "#to_pdf" do
       context "when the PDF is just some action" do
         let(:elements) do
-          [Screenplay::Action.new([
-            Screenplay::UnemphasizedPhrase.new("Hello world!")])]
+          [
+            Screenplay::Action.new(
+              [
+                Screenplay::UnemphasizedPhrase.new("Hello world!")
+              ]
+            )
+          ]
         end
 
         let(:path) { pdf_path("action").to_s }

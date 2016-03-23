@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Smashcut
   class Screenplay
     # The name of a character who says some dialogue.

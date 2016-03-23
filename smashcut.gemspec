@@ -1,4 +1,5 @@
 # coding: utf-8
+# frozen_string_literal: true
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "smashcut/version"
@@ -21,7 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "parslet", "~> 1.7"
   spec.add_dependency "prawn", "~> 2.0"
-  spec.add_dependency "required_arg", "~> 1.0"
 
-  spec.required_ruby_version = ">= 2.0.0"
+  # to get required keyword arguments
+  spec.required_ruby_version = ">= 2.1.0"
 end

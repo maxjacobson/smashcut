@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Smashcut
   RSpec.describe PdfGenerator do
     let(:pdf_generator) { described_class.new(screenplay) }

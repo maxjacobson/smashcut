@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Smashcut
   class Screenplay
     # A specific line of dialogue. Helps make up a block of {Dialogue}.

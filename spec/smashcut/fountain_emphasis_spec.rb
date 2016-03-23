@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Smashcut
   RSpec.describe FountainEmphasis do
     let(:emphasis) { described_class.instance }

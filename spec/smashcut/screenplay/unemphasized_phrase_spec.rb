@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Smashcut
   RSpec.describe Screenplay::UnemphasizedPhrase do
     let(:text) { "lol man..." }

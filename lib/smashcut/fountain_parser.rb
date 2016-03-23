@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "parslet"
 require "parslet/convenience"
 require "smashcut/fountain_emphasis"
@@ -163,8 +164,8 @@ module Smashcut
     def emphasis_delimiter
       return @emphasis_delimiter if defined?(@emphasis_delimiter)
       @emphasis_delimiter = FountainEmphasis.instance.longlist
-                            .map { |delimeter| str(delimeter) }
-                            .reduce(:|)
+                                            .map { |delimeter| str(delimeter) }
+                                            .reduce(:|)
     end
   end
 end

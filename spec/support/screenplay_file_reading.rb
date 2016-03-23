@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Some helper mehods related to reading example files from the file system
 module ScreenplayFileReading
   def read_fountain(file)

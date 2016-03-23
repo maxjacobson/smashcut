@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # This group allows to skip running RuboCop when RSpec failed.
 group :red_green_refactor, :halt_on_fail => true do
   guard :rspec, :cmd => "rspec" do

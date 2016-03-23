@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Smashcut
   class Screenplay
     # This is a block of dialogue. it knows who said it, and what was said

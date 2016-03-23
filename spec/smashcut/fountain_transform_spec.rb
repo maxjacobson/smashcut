@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Smashcut
   RSpec.describe FountainTransform do
     let(:parser) { FountainParser.new }
@@ -19,9 +20,16 @@ module Smashcut
 
       it "makes a screenplay" do
         expect(screenplay).to eq(
-          Screenplay.new([
-            Screenplay::Action.new([
-              Screenplay::UnemphasizedPhrase.new("Max walks home.")])]))
+          Screenplay.new(
+            [
+              Screenplay::Action.new(
+                [
+                  Screenplay::UnemphasizedPhrase.new("Max walks home.")
+                ]
+              )
+            ]
+          )
+        )
       end
     end
 
@@ -30,11 +38,21 @@ module Smashcut
 
       it "makes a screenplay with multiple actions" do
         expect(screenplay).to eq(
-          Screenplay.new([
-            Screenplay::Action.new([
-              Screenplay::UnemphasizedPhrase.new("Max walks home.")]),
-            Screenplay::Action.new([
-              Screenplay::UnemphasizedPhrase.new("Max opens his door.")])]))
+          Screenplay.new(
+            [
+              Screenplay::Action.new(
+                [
+                  Screenplay::UnemphasizedPhrase.new("Max walks home.")
+                ]
+              ),
+              Screenplay::Action.new(
+                [
+                  Screenplay::UnemphasizedPhrase.new("Max opens his door.")
+                ]
+              )
+            ]
+          )
+        )
       end
     end
 
@@ -44,13 +62,21 @@ module Smashcut
       end
       it "makes a screenplay with a scene heading" do
         expect(screenplay).to eq(
-          Screenplay.new([
-            Screenplay::SceneHeading.new("EXT. PARK - DAY"),
-            Screenplay::Action.new([
-              Screenplay::UnemphasizedPhrase.new("A "),
-              Screenplay::EmphasizedPhrase.new("large", "*"),
-              Screenplay::UnemphasizedPhrase.new(
-                " extended family enjoys a picnic.")])]))
+          Screenplay.new(
+            [
+              Screenplay::SceneHeading.new("EXT. PARK - DAY"),
+              Screenplay::Action.new(
+                [
+                  Screenplay::UnemphasizedPhrase.new("A "),
+                  Screenplay::EmphasizedPhrase.new("large", "*"),
+                  Screenplay::UnemphasizedPhrase.new(
+                    " extended family enjoys a picnic."
+                  )
+                ]
+              )
+            ]
+          )
+        )
       end
     end
 
@@ -60,47 +86,79 @@ module Smashcut
       it "makes a screenplay" do
         expect(screenplay).to eq(
           Screenplay.new(
-            [Screenplay::SceneHeading.new("EXT. CARNIVAL - NIGHT"),
-             Screenplay::Action.new(
-               [Screenplay::UnemphasizedPhrase.new(
-                 "MAX walks between the games.")]),
-             Screenplay::Dialogue.new(
-               Screenplay::Character.new("MAX"),
-               [Screenplay::Line.new([
-                 Screenplay::UnemphasizedPhrase.new("Whoa")])])]))
+            [
+              Screenplay::SceneHeading.new("EXT. CARNIVAL - NIGHT"),
+              Screenplay::Action.new(
+                [
+                  Screenplay::UnemphasizedPhrase.new(
+                    "MAX walks between the games."
+                  )
+                ]
+              ),
+              Screenplay::Dialogue.new(
+                Screenplay::Character.new("MAX"),
+                [
+                  Screenplay::Line.new(
+                    [
+                      Screenplay::UnemphasizedPhrase.new("Whoa")
+                    ]
+                  )
+                ]
+              )
+            ]
+          )
+        )
       end
     end
 
     context "when the fountain text has some parenthetical dialogue" do
       let(:fountain_text) { read_fountain "simple dialogue with parenthetical" }
       it do
-        expect(screenplay).to eq Screenplay.new([
-          Screenplay::Dialogue.new(
-            Screenplay::Character.new("BUD"),
-            [Screenplay::LineWithParenthetical.new(
-              "(stoned)",
-              [Screenplay::UnemphasizedPhrase.new(
-                "Whoa, show me that again...")])])
-        ])
+        expect(screenplay).to eq Screenplay.new(
+          [
+            Screenplay::Dialogue.new(
+              Screenplay::Character.new("BUD"),
+              [
+                Screenplay::LineWithParenthetical.new(
+                  "(stoned)",
+                  [
+                    Screenplay::UnemphasizedPhrase.new(
+                      "Whoa, show me that again..."
+                    )
+                  ]
+                )
+              ]
+            )
+          ]
+        )
       end
     end
 
     context "when the fountain text contains a transition" do
       let(:fountain_text) { read_fountain "two scenes with a transition" }
       it do
-        expect(screenplay).to eq Screenplay.new([
-          Screenplay::SceneHeading.new("EXT. PARK - NIGHT"),
-          Screenplay::Action.new([
-            Screenplay::UnemphasizedPhrase.new(
-              "Max bicycles around the park. What is he running from?")
-          ]),
-          Screenplay::Transition.new("FADE TO:"),
-          Screenplay::SceneHeading.new("INT. A CARDBOARD BOX - NIGHT"),
-          Screenplay::Action.new([
-            Screenplay::UnemphasizedPhrase.new("Max shrinks down real small.")
-          ]),
-          Screenplay::Centered.new("LOL THE END")
-        ])
+        expect(screenplay).to eq Screenplay.new(
+          [
+            Screenplay::SceneHeading.new("EXT. PARK - NIGHT"),
+            Screenplay::Action.new(
+              [
+                Screenplay::UnemphasizedPhrase.new(
+                  "Max bicycles around the park. What is he running from?"
+                )
+              ]
+            ),
+            Screenplay::Transition.new("FADE TO:"),
+            Screenplay::SceneHeading.new("INT. A CARDBOARD BOX - NIGHT"),
+            Screenplay::Action.new(
+              [
+                Screenplay::UnemphasizedPhrase.new(
+                  "Max shrinks down real small."
+                )
+              ]
+            ),
+            Screenplay::Centered.new("LOL THE END")
+          ]
+        )
       end
     end
   end

@@ -1,11 +1,11 @@
+# frozen_string_literal: true
 source "https://rubygems.org"
 
-gem "bundler", "~> 1.10"
-gem "rake", "~> 10.0"
+gem "bundler", "~> 1.11"
+gem "rake", "~> 11.0"
 gem "rspec", "~> 3.4"
+# TODO(#shipit): bring back rubocop-rspec
 gem "rubocop"
-gem "rubocop-rspec"
-gem "pry"
 gem "yard"
 gem "guard"
 gem "guard-rspec"
