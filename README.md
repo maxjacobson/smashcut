@@ -1,6 +1,9 @@
 # smashcut
 
 [![Build Status](https://travis-ci.org/maxjacobson/smashcut.svg?branch=master)](https://travis-ci.org/maxjacobson/smashcut)
+[![Code Climate](https://codeclimate.com/github/maxjacobson/smashcut/badges/gpa.svg)](https://codeclimate.com/github/maxjacobson/smashcut)
+[![Test Coverage](https://codeclimate.com/github/maxjacobson/smashcut/badges/coverage.svg)](https://codeclimate.com/github/maxjacobson/smashcut/coverage)
+[![Issue Count](https://codeclimate.com/github/maxjacobson/smashcut/badges/issue_count.svg)](https://codeclimate.com/github/maxjacobson/smashcut)
 
 This project helps convert [Fountain](http://fountain.io/syntax)-formatted
 screenplays to PDF. It's a work in progress. The plan is to release it via
