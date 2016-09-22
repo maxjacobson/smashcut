@@ -8,7 +8,9 @@ module Smashcut
       let(:lines) do
         [Screenplay::Line.new(
           [Screenplay::UnemphasizedPhrase.new(
-            "Hello, I wrote Big Fish.")])]
+            "Hello, I wrote Big Fish."
+          )]
+        )]
       end
 
       it do
@@ -22,7 +24,9 @@ module Smashcut
           Screenplay::LineWithParenthetical.new(
             "(coolly)",
             [Screenplay::UnemphasizedPhrase.new(
-              "Hello, I wrote Charlie's Angels.")])
+              "Hello, I wrote Charlie's Angels."
+            )]
+          )
         ]
       end
 
@@ -37,7 +41,8 @@ module Smashcut
         [Screenplay::Line.new([Screenplay::UnemphasizedPhrase.new("Hello")]),
          Screenplay::LineWithParenthetical.new(
            "(politely)",
-           [Screenplay::UnemphasizedPhrase.new("I wrote Big Fish.")])]
+           [Screenplay::UnemphasizedPhrase.new("I wrote Big Fish.")]
+         )]
       end
 
       it do

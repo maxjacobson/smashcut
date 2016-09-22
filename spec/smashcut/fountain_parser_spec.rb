@@ -14,7 +14,9 @@ RSpec.describe Smashcut::FountainParser do
           .as(:screenplay => [
                 { :scene_heading => "EXT. PARK - DAY" },
                 { :action => [
-                  { :plain => "A large extended family enjoys a picnic." }] }])
+                  { :plain => "A large extended family enjoys a picnic." }
+                ] }
+              ])
       end
     end
 
@@ -27,7 +29,8 @@ RSpec.describe Smashcut::FountainParser do
                 { :scene_heading => "EXT. CARNIVAL - NIGHT" },
                 { :action => [{ :plain => "MAX walks between the games." }] },
                 { :character => "MAX",
-                  :lines => [{ :line => [{ :plain => "Whoa" }] }] }])
+                  :lines => [{ :line => [{ :plain => "Whoa" }] }] }
+              ])
       end
     end
 
@@ -137,7 +140,8 @@ RSpec.describe Smashcut::FountainParser do
             .as(:character => "BUD",
                 :lines => [{ :parenthetical => "(stoned)",
                              :line => [
-                               { :plain => "Whoa, show me that again..." }] }])
+                               { :plain => "Whoa, show me that again..." }
+                             ] }])
         end
       end
 
@@ -150,9 +154,11 @@ RSpec.describe Smashcut::FountainParser do
                 :lines => [
                   { :parenthetical => "(wanly)",
                     :line => [
-                      { :plain => "Everything is going dark..." }] },
+                      { :plain => "Everything is going dark..." }
+                    ] },
                   { :parenthetical => "(beat)",
-                    :line => [{ :plain => "Someone turn the lights on..." }] }])
+                    :line => [{ :plain => "Someone turn the lights on..." }] }
+                ])
         end
       end
 
@@ -164,7 +170,9 @@ RSpec.describe Smashcut::FountainParser do
             .as(:character => "MAX",
                 :lines => [
                   { :line => [
-                    { :plain => "What time is your train?" }] }])
+                    { :plain => "What time is your train?" }
+                  ] }
+                ])
         end
       end
     end
@@ -250,7 +258,7 @@ RSpec.describe Smashcut::FountainParser do
       end
 
       describe "scene headings with scene numbers" do
-        let(:text) { 'EXT. HIKING TRAIL - DAY#1#' }
+        let(:text) { "EXT. HIKING TRAIL - DAY#1#" }
         it "can parse these" do
           expect(rule).to parse(text)
             .as(:scene_heading => "EXT. HIKING TRAIL - DAY",
@@ -428,7 +436,8 @@ RSpec.describe Smashcut::FountainParser do
           expect(rule).to parse(text)
             .as(:action => [
                   { :emphasized_text => "HOLY SHIT", :emphasis => "*" },
-                  { :plain => " there's a puppy." }])
+                  { :plain => " there's a puppy." }
+                ])
         end
       end
 
@@ -438,7 +447,8 @@ RSpec.describe Smashcut::FountainParser do
           expect(rule).to parse(text)
             .as(:action => [
                   { :plain => "And then... " },
-                  { :emphasized_text => "HOLY SHIT", :emphasis => "_" }])
+                  { :emphasized_text => "HOLY SHIT", :emphasis => "_" }
+                ])
         end
       end
 
@@ -449,7 +459,8 @@ RSpec.describe Smashcut::FountainParser do
             .as(:action => [
                   { :plain => "And then... " },
                   { :emphasized_text => "HOLY SHIT", :emphasis => "_" },
-                  { :plain => " a puppy!" }])
+                  { :plain => " a puppy!" }
+                ])
         end
       end
 
@@ -461,7 +472,8 @@ RSpec.describe Smashcut::FountainParser do
                   { :plain => "And then... " },
                   { :emphasized_text => "HOLY SHIT", :emphasis => "_" },
                   { :plain => " " },
-                  { :emphasized_text => "a puppy!", :emphasis => "*" }])
+                  { :emphasized_text => "a puppy!", :emphasis => "*" }
+                ])
         end
       end
     end
