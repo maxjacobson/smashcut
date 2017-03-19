@@ -3,7 +3,8 @@
 module ScreenplayFileReading
   def read_fountain(file)
     filename = File.expand_path(
-      "./spec/support/screenplays/#{file.tr(' ', '_')}.fountain")
+      "./spec/support/screenplays/#{file.tr(' ', '_')}.fountain"
+    )
     File.read(filename)
   end
 end
