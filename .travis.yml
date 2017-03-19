@@ -14,3 +14,5 @@ script:
   - bundle exec rspec
   - bundle exec rubocop
   - bundle exec todo_lint
+after_success:
+  - bundle exec codeclimate-test-reporter
