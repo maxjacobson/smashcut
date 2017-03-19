@@ -7,6 +7,7 @@ gem "rake", "~> 11.0"
 gem "rspec", "~> 3.4"
 # TODO(#oneday): bring back rubocop-rspec
 gem "rubocop", "0.46"
+gem "simplecov", "< 0.14"
 gem "todo_lint"
 gem "yard"
 
